@@ -5,6 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,6 +96,10 @@ public class YuGiOhAPIDeckAndCardsImpl implements YuGiOhAPIDeckAndCards{
 			}				
 		}
 		
+		if(relDeckCards.getCard_price() == null || relDeckCards.getCard_raridade() == null
+				|| relDeckCards.getCard_set_code() == null )
+			throw new EntityNotFoundException("No attribute values found for Relation Deck x Cards");
+			
 		return relDeckCards;
 	}
 

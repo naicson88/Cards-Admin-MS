@@ -2,17 +2,16 @@ package com.naicson.yugioh.dto;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.naicson.yugioh.entity.RelDeckCards;
 
 @Component
-public class KonamiDeck implements Serializable{
+public class KonamiDeck implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String imagem;
@@ -21,6 +20,7 @@ public class KonamiDeck implements Serializable{
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
 	private Date lancamento;
 	private String setType;
+	private List<RelDeckCards> relDeckCards;
 	
 	public Long getId() {
 		return id;
@@ -63,6 +63,12 @@ public class KonamiDeck implements Serializable{
 	public String toString() {
 		return "KonamiDeck [id=" + id + ", imagem=" + imagem + ", nome=" + nome + ", nomePortugues=" + nomePortugues
 				+ ", lancamento=" + lancamento + ", setType=" + setType + "]";
+	}
+	public List<RelDeckCards> getRelDeckCards() {
+		return relDeckCards;
+	}
+	public void setRelDeckCards(List<RelDeckCards> relDeckCards) {
+		this.relDeckCards = relDeckCards;
 	}
 	
 	

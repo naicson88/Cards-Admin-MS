@@ -38,10 +38,10 @@ public class DeckController {
 	
 	@PostMapping("/new-deck")
 	public ResponseEntity<KonamiDeck> registerNewDeck(@RequestBody KonamiDeck kDeck){
-		this.deckService.validKonamiDeckReceived(kDeck);
+		KonamiDeck createdKonamiDeck = deckService.createNewKonamiDeckWithCards(kDeck);
 		
-		this.rabbitService.sendMessage(RabbitMQConstantes.DECK_QUEUE, kDeck);
-		return new ResponseEntity<KonamiDeck>(kDeck, HttpStatus.OK);
+		//this.rabbitService.sendMessage(RabbitMQConstantes.DECK_QUEUE, createdKonamiDeck);
+		return new ResponseEntity<KonamiDeck>(createdKonamiDeck, HttpStatus.OK);
 	}
 	
 	@GetMapping("/api")
