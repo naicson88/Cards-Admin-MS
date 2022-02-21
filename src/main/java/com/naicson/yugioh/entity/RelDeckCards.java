@@ -1,9 +1,11 @@
 package com.naicson.yugioh.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class RelDeckCards {
-	
+public class RelDeckCards implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private Long id;
 	private Long deckId;
 	private Long cardNumber;

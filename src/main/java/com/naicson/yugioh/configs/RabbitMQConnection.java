@@ -33,7 +33,7 @@ public class RabbitMQConnection {
 	
 
 	
-	/*@PostConstruct
+	@PostConstruct
 	public void add() {
 		Queue deckQueue = this.queue(RabbitMQConstantes.DECK_QUEUE);
 		
@@ -47,6 +47,6 @@ public class RabbitMQConnection {
 		this.amqAdmin.declareExchange(change);
 		
 		this.amqAdmin.declareBinding(deckBinding);
-	}*/
+	}
 	
 }

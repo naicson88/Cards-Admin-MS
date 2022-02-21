@@ -31,6 +31,9 @@ public class DeckServiceImpl implements DeckService {
 			throw new IllegalArgumentException("Informed Relation Deck x Cards is invalid!");
 		}
 		
+		//It necessary check if all cards are already registered in cards' table
+		
+		
 		konamiDeck.setRelDeckCards(listRelDeckCards);
 		
 		return konamiDeck;

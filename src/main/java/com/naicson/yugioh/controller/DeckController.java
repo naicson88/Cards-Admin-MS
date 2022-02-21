@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.naicson.yugioh.configs.RabbitMQConstantes;
 import com.naicson.yugioh.dto.KonamiDeck;
 import com.naicson.yugioh.entity.RelDeckCards;
+import com.naicson.yugioh.resttemplates.CardRestTemplate;
 import com.naicson.yugioh.resttemplates.DeckRestTemplate;
 import com.naicson.yugioh.service.DeckServiceImpl;
 import com.naicson.yugioh.service.RabbitMQService;
@@ -40,7 +41,7 @@ public class DeckController {
 	public ResponseEntity<KonamiDeck> registerNewDeck(@RequestBody KonamiDeck kDeck){
 		KonamiDeck createdKonamiDeck = deckService.createNewKonamiDeckWithCards(kDeck);
 		
-		//this.rabbitService.sendMessage(RabbitMQConstantes.DECK_QUEUE, createdKonamiDeck);
+		this.rabbitService.sendMessage(RabbitMQConstantes.DECK_QUEUE, createdKonamiDeck);
 		return new ResponseEntity<KonamiDeck>(createdKonamiDeck, HttpStatus.OK);
 	}
 	
@@ -62,4 +63,5 @@ public class DeckController {
 		return entity;
 		
 	}
+	
 }

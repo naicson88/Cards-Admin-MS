@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.naicson.yugioh.entity.Card;
 import com.naicson.yugioh.entity.RelDeckCards;
 
 @Component
@@ -20,6 +21,7 @@ public class KonamiDeck implements Serializable {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
 	private Date lancamento;
 	private String setType;
+	private List<Card> cardsToBeRegistered;
 	private List<RelDeckCards> relDeckCards;
 	
 	public Long getId() {
@@ -69,6 +71,12 @@ public class KonamiDeck implements Serializable {
 	}
 	public void setRelDeckCards(List<RelDeckCards> relDeckCards) {
 		this.relDeckCards = relDeckCards;
+	}
+	public List<Card> getCardsToBeRegistered() {
+		return cardsToBeRegistered;
+	}
+	public void setCardsToBeRegistered(List<Card> cardsToBeRegistered) {
+		this.cardsToBeRegistered = cardsToBeRegistered;
 	}
 	
 	
