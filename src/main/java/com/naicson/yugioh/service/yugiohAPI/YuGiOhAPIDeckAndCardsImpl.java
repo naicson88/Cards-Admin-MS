@@ -1,4 +1,4 @@
-package com.naicson.yugioh.service;
+package com.naicson.yugioh.service.yugiohAPI;
 
 import java.util.Date;
 import java.util.LinkedList;

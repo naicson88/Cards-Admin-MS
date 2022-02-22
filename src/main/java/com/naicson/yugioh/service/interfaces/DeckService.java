@@ -4,5 +4,5 @@ import com.naicson.yugioh.dto.KonamiDeck;
 
 public interface DeckService {
 	
-	KonamiDeck createNewKonamiDeckWithCards(KonamiDeck konamiDeck);
+	KonamiDeck createNewKonamiDeckWithCards(KonamiDeck konamiDeck, String token);
 }

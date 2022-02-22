@@ -1,5 +1,6 @@
 package com.naicson.yugioh.service;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.naicson.yugioh.dto.KonamiDeck;
 import com.naicson.yugioh.entity.RelDeckCards;
 import com.naicson.yugioh.service.interfaces.DeckService;
+import com.naicson.yugioh.service.yugiohAPI.YuGiOhAPIDeckAndCardsImpl;
 
 @Service
 public class DeckServiceImpl implements DeckService {
@@ -19,9 +21,12 @@ public class DeckServiceImpl implements DeckService {
 	
 	@Autowired
 	YuGiOhAPIDeckAndCardsImpl apiService;
+	
+	@Autowired
+	CardServiceDetailImpl cardService;
 
 	@Override
-	public KonamiDeck createNewKonamiDeckWithCards(KonamiDeck konamiDeck) {
+	public KonamiDeck createNewKonamiDeckWithCards(KonamiDeck konamiDeck, String token) {
 		this.validKonamiDeck(konamiDeck);
 		
 		List<RelDeckCards> listRelDeckCards = apiService.consultCardsOfADeckInYuGiOhAPI(konamiDeck.getNome());
@@ -31,8 +36,14 @@ public class DeckServiceImpl implements DeckService {
 			throw new IllegalArgumentException("Informed Relation Deck x Cards is invalid!");
 		}
 		
-		//It necessary check if all cards are already registered in cards' table
+		//It necessary to check if all cards are already registered in cards' table
+		Long[] cardsNotRegistered = cardService.verifyCardsNotRegistered(listRelDeckCards, token);
+		List<Long> listCardsNotRegistered =  Arrays.asList(cardsNotRegistered);
 		
+		if(cardsNotRegistered != null && cardsNotRegistered.length > 0) {
+
+			konamiDeck.setCardsToBeRegistered(cardService.getCardsToBeRegistered(listCardsNotRegistered));
+		}
 		
 		konamiDeck.setRelDeckCards(listRelDeckCards);
 		

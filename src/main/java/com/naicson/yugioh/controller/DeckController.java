@@ -21,7 +21,7 @@ import com.naicson.yugioh.resttemplates.CardRestTemplate;
 import com.naicson.yugioh.resttemplates.DeckRestTemplate;
 import com.naicson.yugioh.service.DeckServiceImpl;
 import com.naicson.yugioh.service.RabbitMQService;
-import com.naicson.yugioh.service.YuGiOhAPIDeckAndCardsImpl;
+import com.naicson.yugioh.service.yugiohAPI.YuGiOhAPIDeckAndCardsImpl;
 
 @RestController
 @RequestMapping({ "v1/admin/deck" })
@@ -38,8 +38,8 @@ public class DeckController {
 	private YuGiOhAPIDeckAndCardsImpl apiService;
 	
 	@PostMapping("/new-deck")
-	public ResponseEntity<KonamiDeck> registerNewDeck(@RequestBody KonamiDeck kDeck){
-		KonamiDeck createdKonamiDeck = deckService.createNewKonamiDeckWithCards(kDeck);
+	public ResponseEntity<KonamiDeck> registerNewDeck(@RequestBody KonamiDeck kDeck, @RequestHeader("Authorization") String token){
+		KonamiDeck createdKonamiDeck = deckService.createNewKonamiDeckWithCards(kDeck, token);
 		
 		this.rabbitService.sendMessage(RabbitMQConstantes.DECK_QUEUE, createdKonamiDeck);
 		return new ResponseEntity<KonamiDeck>(createdKonamiDeck, HttpStatus.OK);
