@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.naicson.yugioh.entity.CardYuGiOhAPI;
+import com.naicson.yugioh.dto.CardYuGiOhAPI;
 import com.naicson.yugioh.entity.RelDeckCards;
 import com.naicson.yugioh.resttemplates.CardRestTemplate;
 import com.naicson.yugioh.resttemplates.YuGiOhAPICardsRestTemplate;
@@ -49,7 +49,7 @@ public class CardServiceDetailImpl implements CardServiceDetail {
 			}
 
 		} catch (Exception e) {
-			logger.error("It was not possible verify Card Not Registered");
+			logger.error("It was not possible verify Cards Not Registered");
 		}
 
 		return cardsNotRegistered.getBody();

@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.naicson.yugioh.entity.CardYuGiOhAPI;
 import com.naicson.yugioh.entity.RelDeckCards;
 
 @Component

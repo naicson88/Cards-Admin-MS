@@ -2,7 +2,7 @@ package com.naicson.yugioh.service.interfaces;
 
 import java.util.List;
 
-import com.naicson.yugioh.entity.CardYuGiOhAPI;
+import com.naicson.yugioh.dto.CardYuGiOhAPI;
 import com.naicson.yugioh.entity.RelDeckCards;
 
 public interface CardServiceDetail {

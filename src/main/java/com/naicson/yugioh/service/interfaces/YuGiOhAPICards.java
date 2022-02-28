@@ -1,6 +1,6 @@
 package com.naicson.yugioh.service.interfaces;
 
-import com.naicson.yugioh.entity.CardYuGiOhAPI;
+import com.naicson.yugioh.dto.CardYuGiOhAPI;
 
 public interface YuGiOhAPICards {
 	

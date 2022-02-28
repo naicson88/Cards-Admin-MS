@@ -10,7 +10,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.naicson.yugioh.entity.CardYuGiOhAPI;
+import com.naicson.yugioh.dto.CardYuGiOhAPI;
 import com.naicson.yugioh.resttemplates.YuGiOhAPICardsRestTemplate;
 import com.naicson.yugioh.service.DeckServiceImpl;
 import com.naicson.yugioh.service.interfaces.YuGiOhAPICards;
