@@ -22,7 +22,7 @@ public class YuGiOhAPIDeckAndCardsRestTemplate {
 				.scheme(this.schem)
 				.host(this.host)	
 				.path("api/v7/cardinfo.php")
-				.queryParam("set", setName)
+				.queryParam("cardset", setName)
 				.build();
 		System.out.println(uri.toString());
 
