@@ -9,7 +9,7 @@ public class RelDeckCards implements Serializable {
 	private Long id;
 	private Long deckId;
 	private Long cardNumber;
-	private String card_set_code;
+	private String cardSetCode;
 	private Double card_price;
 	private String card_raridade;
 	private Date dt_criacao;
@@ -34,10 +34,10 @@ public class RelDeckCards implements Serializable {
 		this.cardNumber = card_numero;
 	}
 	public String getCard_set_code() {
-		return card_set_code;
+		return cardSetCode;
 	}
 	public void setCard_set_code(String card_set_code) {
-		this.card_set_code = card_set_code;
+		this.cardSetCode = card_set_code;
 	}
 	public Double getCard_price() {
 		return card_price;
@@ -62,6 +62,12 @@ public class RelDeckCards implements Serializable {
 	}
 	public void setIsSideDeck(Boolean isSideDeck) {
 		this.isSideDeck = isSideDeck;
+	}
+	@Override
+	public String toString() {
+		return "RelDeckCards [id=" + id + ", deckId=" + deckId + ", cardNumber=" + cardNumber + ", cardSetCode="
+				+ cardSetCode + ", card_price=" + card_price + ", card_raridade=" + card_raridade + ", dt_criacao="
+				+ dt_criacao + ", isSideDeck=" + isSideDeck + "]";
 	}	
 	
 	

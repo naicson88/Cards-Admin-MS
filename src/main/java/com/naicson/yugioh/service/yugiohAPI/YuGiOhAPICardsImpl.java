@@ -59,8 +59,8 @@ public class YuGiOhAPICardsImpl implements YuGiOhAPICards {
 			if(cardArr != null && cardArr.length == 1) {
 				card = cardArr[0];
 			} else {
-				logger.error("IT was not possible transform Json in a Card");
-				throw new ErrorMessage("IT was not possible transform Json in a Card");
+				logger.error("It was not possible transform Json in a Card");
+				throw new ErrorMessage("It was not possible transform Json in a Card");
 			}
 			
 		} catch (JsonProcessingException e) {

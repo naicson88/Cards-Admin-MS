@@ -60,11 +60,6 @@ public class KonamiDeck implements Serializable {
 		this.setType = setType;
 	}
 	
-	@Override
-	public String toString() {
-		return "KonamiDeck [id=" + id + ", imagem=" + imagem + ", nome=" + nome + ", nomePortugues=" + nomePortugues
-				+ ", lancamento=" + lancamento + ", setType=" + setType + "]";
-	}
 	public List<RelDeckCards> getRelDeckCards() {
 		return relDeckCards;
 	}
@@ -76,6 +71,13 @@ public class KonamiDeck implements Serializable {
 	}
 	public void setCardsToBeRegistered(List<CardYuGiOhAPI> cardsToBeRegistered) {
 		this.cardsToBeRegistered = cardsToBeRegistered;
+	}
+	
+	@Override
+	public String toString() {
+		return "KonamiDeck [id=" + id + ", imagem=" + imagem + ", nome=" + nome + ", nomePortugues=" + nomePortugues
+				+ ", lancamento=" + lancamento + ", setType=" + setType + ", cardsToBeRegistered=" + cardsToBeRegistered
+				+ ", relDeckCards=" + relDeckCards + "]";
 	}
 	
 	
