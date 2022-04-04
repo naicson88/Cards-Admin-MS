@@ -24,6 +24,10 @@ public class SetCollectionDefaultDeck implements NewCollectionTemplate {
 		
 		KonamiDeck deck = this.setCollectionToDeck(setCollectionDto);
 		deck = deckService.createNewKonamiDeckWithCards(deck, token);
+		
+		if(setCollectionDto.getIsSpeedDuel()) 
+			deck.getRelDeckCards().forEach(rel -> rel.setIsSpeedDuel(true));
+				
 		setCollectionDto.setDecks(List.of(deck));
 		
 		return setCollectionDto;

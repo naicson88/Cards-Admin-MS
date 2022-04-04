@@ -14,6 +14,7 @@ public class RelDeckCards implements Serializable {
 	private String card_raridade;
 	private Date dt_criacao;
 	private Boolean isSideDeck;
+	private boolean isSpeedDuel;
 	
 	public Long getId() {
 		return id;
@@ -68,6 +69,12 @@ public class RelDeckCards implements Serializable {
 		return "RelDeckCards [id=" + id + ", deckId=" + deckId + ", cardNumber=" + cardNumber + ", cardSetCode="
 				+ cardSetCode + ", card_price=" + card_price + ", card_raridade=" + card_raridade + ", dt_criacao="
 				+ dt_criacao + ", isSideDeck=" + isSideDeck + "]";
+	}
+	public boolean getIsSpeedDuel() {
+		return isSpeedDuel;
+	}
+	public void setIsSpeedDuel(boolean isSpeedDuel) {
+		this.isSpeedDuel = isSpeedDuel;
 	}	
 	
 	

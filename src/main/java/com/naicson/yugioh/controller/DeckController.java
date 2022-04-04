@@ -42,6 +42,7 @@ public class DeckController {
 		KonamiDeck createdKonamiDeck = deckService.createNewKonamiDeckWithCards(kDeck, token);
 		
 		this.rabbitService.sendMessage(RabbitMQConstantes.DECK_QUEUE, createdKonamiDeck);
+		
 		return new ResponseEntity<KonamiDeck>(createdKonamiDeck, HttpStatus.OK);
 	}
 	

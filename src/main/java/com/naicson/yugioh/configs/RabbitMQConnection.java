@@ -33,20 +33,40 @@ public class RabbitMQConnection {
 	
 
 	
-//	@PostConstruct
-//	public void add() {
-//		Queue deckQueue = this.queue(RabbitMQConstantes.DECK_QUEUE);
-//		
-//		DirectExchange change = this.directExchange();
-//		
-//		Binding deckBinding = this.relationship(deckQueue, change);
-//		
-//		//Creating RabbitMQ Queues
-//		this.amqAdmin.declareQueue(deckQueue);
-//		
-//		this.amqAdmin.declareExchange(change);
-//		
-//		this.amqAdmin.declareBinding(deckBinding);
-//	}
+	@PostConstruct
+	public void add() {
+		this.createDeckQueue();
+		this.createSetCollectionQueue();
+	}
+	
+	private void createDeckQueue() {
+		Queue deckQueue = this.queue(RabbitMQConstantes.DECK_QUEUE);
+		
+		DirectExchange change = this.directExchange();
+		
+		Binding deckBinding = this.relationship(deckQueue, change);
+		
+		//Creating RabbitMQ Queues
+		this.amqAdmin.declareQueue(deckQueue);
+		
+		this.amqAdmin.declareExchange(change);
+		
+		this.amqAdmin.declareBinding(deckBinding);
+	}
+	
+	private void createSetCollectionQueue() {
+		Queue setCollectionQueue = this.queue(RabbitMQConstantes.SETCOLLECTION_QUEUE);
+		DirectExchange change = this.directExchange();
+		
+		Binding collectionBinding = this.relationship(setCollectionQueue, change);
+		
+		//Creating RabbitMQ Queues
+		this.amqAdmin.declareQueue(setCollectionQueue);
+		
+		this.amqAdmin.declareExchange(change);
+		
+		this.amqAdmin.declareBinding(collectionBinding);
+		
+	}
 	
 }

@@ -16,8 +16,8 @@ public class SetCollectionDto {
 	private Date releaseDate;
 	private String setType;
 	private List<KonamiDeck> decks;
+	private Boolean isSpeedDuel;
 
-	
 	
 	public String getName() {
 		return name;
@@ -69,11 +69,18 @@ public class SetCollectionDto {
 	public void setDecks(List<KonamiDeck> decks) {
 		this.decks = decks;
 	}
+	
+	public boolean getIsSpeedDuel() {
+		return isSpeedDuel;
+	}
+	public void setIsSpeedDuel(boolean isSpeedDuel) {
+		this.isSpeedDuel = isSpeedDuel;
+	}
 	@Override
 	public String toString() {
 		return "SetCollectionDto [name=" + name + ", portugueseName=" + portugueseName + ", imgPath=" + imgPath
-				+ ", onlyDefaultDeck=" + onlyDefaultDeck + ", deckParameters=" + deckParameters + ", releaseDate="
-				+ releaseDate + ", setType=" + setType + ", decks=" + decks + "]";
+				+ ", onlyDefaultDeck=" + onlyDefaultDeck + ", isSpeedDuel=" + isSpeedDuel + ", deckParameters="
+				+ deckParameters + ", releaseDate=" + releaseDate + ", setType=" + setType + ", decks=" + decks + "]";
 	}
 	
 	

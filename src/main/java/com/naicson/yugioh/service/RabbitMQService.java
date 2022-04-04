@@ -14,24 +14,23 @@ public class RabbitMQService {
 	@Autowired
 	private RabbitTemplate template;
 	
-
-	
 	//Send message for RabbitMQ
-	/*public void sendMessage(String queueName, Object message) {	
+	public void sendMessageAsJson(String queueName, Object message) {	
 		ObjectMapper mapper = new ObjectMapper();
+		
 		try {
 			String json = mapper.writeValueAsString(message);
 			this.template.convertAndSend(queueName, json);
 			
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-	}*/
+	}
 	
 	public void sendMessage(String queueName, Object message) {	
 			this.template.convertAndSend(queueName, message);
 
 	}
+	
+	
 }
