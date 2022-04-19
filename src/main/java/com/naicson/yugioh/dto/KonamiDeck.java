@@ -22,6 +22,7 @@ public class KonamiDeck implements Serializable {
 	private String setType;
 	private List<CardYuGiOhAPI> cardsToBeRegistered;
 	private List<RelDeckCards> relDeckCards;
+	 
 	
 	public Long getId() {
 		return id;
@@ -79,6 +80,8 @@ public class KonamiDeck implements Serializable {
 				+ ", lancamento=" + lancamento + ", setType=" + setType + ", cardsToBeRegistered=" + cardsToBeRegistered
 				+ ", relDeckCards=" + relDeckCards + "]";
 	}
+	
+	
 	
 	
 	

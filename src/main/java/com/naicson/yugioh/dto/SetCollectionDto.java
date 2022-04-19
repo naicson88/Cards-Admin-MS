@@ -76,12 +76,15 @@ public class SetCollectionDto {
 	public void setIsSpeedDuel(boolean isSpeedDuel) {
 		this.isSpeedDuel = isSpeedDuel;
 	}
+	
 	@Override
 	public String toString() {
 		return "SetCollectionDto [name=" + name + ", portugueseName=" + portugueseName + ", imgPath=" + imgPath
-				+ ", onlyDefaultDeck=" + onlyDefaultDeck + ", isSpeedDuel=" + isSpeedDuel + ", deckParameters="
-				+ deckParameters + ", releaseDate=" + releaseDate + ", setType=" + setType + ", decks=" + decks + "]";
+				+ ", onlyDefaultDeck=" + onlyDefaultDeck + ", deckParameters=" + deckParameters + ", releaseDate="
+				+ releaseDate + ", setType=" + setType + ", decks=" + decks + ", isSpeedDuel=" + isSpeedDuel + "]";
 	}
+	
+	
 	
 	
 	

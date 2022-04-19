@@ -28,23 +28,21 @@ public class YuGiOhAPIDeckAndCardsImpl implements YuGiOhAPIDeckAndCards{
 	@Override
 	public List<RelDeckCards> consultCardsOfADeckInYuGiOhAPI(String setName) {
 		
-		if(setName == null || setName.isBlank()) {
-			throw new IllegalArgumentException("Set Name informed is invalid.");
-		}
+		if(setName == null || setName.isBlank()) 
+			throw new IllegalArgumentException("Set Name informed is invalid.");		
 		
 		this.SET_NAME = setName;
 		
 		String json = restTemplate.getCardsFromSetInYuGiOhAPI(setName);
 
-		if(json == null || json.isEmpty() || json.isBlank()) {
+		if(json == null || json.isEmpty() || json.isBlank()) 
 			throw new NoSuchElementException("JSON with deck info was empty");
-		}
-		
+				
 		List<RelDeckCards> listRelDeckCards = this.convertJsonInListOfRelDeckCards(json);
 		
-		if(listRelDeckCards == null || listRelDeckCards.isEmpty()) {
+		if(listRelDeckCards == null || listRelDeckCards.isEmpty()) 
 			throw new NoSuchElementException("Cards of this Set were not found");
-		}
+	
 		
 		return listRelDeckCards;
 	}
@@ -87,7 +85,7 @@ public class YuGiOhAPIDeckAndCardsImpl implements YuGiOhAPIDeckAndCards{
 
 			if(setName.equalsIgnoreCase(this.SET_NAME)){
 				
-				relDeckCards.setCard_numero(Integer.toUnsignedLong((Integer) card.get("id")));
+				relDeckCards.setCardNumber(Integer.toUnsignedLong((Integer) card.get("id")));
 				relDeckCards.setCard_price(Double.parseDouble((String) relation.get("set_price")));
 				relDeckCards.setCard_raridade((String) relation.get("set_rarity"));
 				relDeckCards.setCard_set_code((String) relation.get("set_code"));

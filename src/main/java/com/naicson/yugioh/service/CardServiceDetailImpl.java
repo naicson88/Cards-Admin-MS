@@ -33,6 +33,7 @@ public class CardServiceDetailImpl implements CardServiceDetail {
 	public Long[] verifyCardsNotRegistered(List<RelDeckCards> listRelDeckCards, String token) {
 
 		ResponseEntity<Long[]> cardsNotRegistered = null;
+		
 		try {
 
 			this.validVerifyCardsNotRegisteredMethod(listRelDeckCards, token);
@@ -59,8 +60,8 @@ public class CardServiceDetailImpl implements CardServiceDetail {
 	@Override
 	public List<Long> getCardsNumberFromListRelDeckCards(List<RelDeckCards> listRelDeckCards) {
 
-		List<Long> cardNumbers = listRelDeckCards.stream().filter(rel -> rel.getCard_numero() != null)
-				.map(RelDeckCards::getCard_numero).collect(Collectors.toList());
+		List<Long> cardNumbers = listRelDeckCards.stream().filter(rel -> rel.getCardNumber() != null)
+				.map(RelDeckCards::getCardNumber).collect(Collectors.toList());
 
 		if (cardNumbers != null && cardNumbers.size() == 0) {
 			logger.error("It was not possible get Card Numbers");

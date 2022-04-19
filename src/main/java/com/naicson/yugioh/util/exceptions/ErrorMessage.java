@@ -1,9 +1,8 @@
 package com.naicson.yugioh.util.exceptions;
 
-public class ErrorMessage extends Exception {
+public class ErrorMessage extends RuntimeException {
 	
 	private static final long serialVersionUID = 1149241039409861914L;
-	
 	private String status_code;
 	private String msg;
 	

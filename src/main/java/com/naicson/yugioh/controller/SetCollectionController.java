@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.naicson.yugioh.configs.RabbitMQConstantes;
 import com.naicson.yugioh.dto.SetCollectionDto;
-import com.naicson.yugioh.service.CardServiceDetailImpl;
 import com.naicson.yugioh.service.RabbitMQService;
 import com.naicson.yugioh.service.setCollection.SetCollectionServiceImpl;
 
@@ -29,7 +28,6 @@ public class SetCollectionController {
 	@Autowired
 	private RabbitMQService rabbitService;
 	
-	
 	Logger logger = LoggerFactory.getLogger(SetCollectionController.class);
 	
 	@PostMapping("/new-collection")
@@ -39,7 +37,7 @@ public class SetCollectionController {
 		logger.info("Starting creating new SetCollection...");
 		
 		collection = collectionService.createNewSetCollection(collection, token);
-		
+		logger.info("DTO: {} ", collection);
 		this.rabbitService.sendMessageAsJson(RabbitMQConstantes.SETCOLLECTION_QUEUE, collection);
 		
 		logger.info("Message sent successfully to SETCOLLECTION Queue");

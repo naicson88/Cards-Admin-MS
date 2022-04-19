@@ -1,10 +1,6 @@
 package com.naicson.yugioh.service.setCollection;
 
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-
-import javax.naming.directory.InvalidAttributeIdentifierException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

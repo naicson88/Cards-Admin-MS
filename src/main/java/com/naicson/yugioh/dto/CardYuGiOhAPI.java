@@ -117,5 +117,14 @@ public class CardYuGiOhAPI implements Serializable {
 	public void setLinkval(int linkval) {
 		this.linkval = linkval;
 	}
+
+	@Override
+	public String toString() {
+		return "CardYuGiOhAPI [id=" + id + ", categoria=" + categoria + ", name=" + name + ", attribute=" + attribute
+				+ ", level=" + level + ", race=" + race + ", atk=" + atk + ", def=" + def + ", desc=" + desc
+				+ ", archetype=" + archetype + ", scale=" + scale + ", linkval=" + linkval + "]";
+	}
+	
+	
 	
 }
