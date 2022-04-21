@@ -29,12 +29,6 @@ public class RelDeckCards implements Serializable {
 		this.deckId = deck_id;
 	}
 
-	public String getCard_set_code() {
-		return cardSetCode;
-	}
-	public void setCard_set_code(String card_set_code) {
-		this.cardSetCode = card_set_code;
-	}
 	public Double getCard_price() {
 		return card_price;
 	}

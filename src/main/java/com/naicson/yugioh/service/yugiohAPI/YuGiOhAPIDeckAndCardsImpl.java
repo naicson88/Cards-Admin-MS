@@ -49,10 +49,9 @@ public class YuGiOhAPIDeckAndCardsImpl implements YuGiOhAPIDeckAndCards{
 	
 	private List<RelDeckCards> convertJsonInListOfRelDeckCards(String json) {
 		
-		if(json == null || json.isEmpty() || json.isBlank()) {
+		if(json == null || json.isEmpty() || json.isBlank()) 
 			throw new NoSuchElementException("JSON with deck info was empty");
-		}
-		
+				
 		JSONObject object = new JSONObject(json);
 		JSONArray jsonArray = object.getJSONArray("data");
 		
@@ -64,10 +63,9 @@ public class YuGiOhAPIDeckAndCardsImpl implements YuGiOhAPIDeckAndCards{
 			
 			RelDeckCards relation = this.returnARelDeckCardFromAJSONObject(card);
 			
-			if(relation == null) {
+			if(relation == null) 
 				throw new NoSuchElementException("Relation Deck x Cards is empty");
-			}
-			
+						
 			listRelation.add(relation);
 		}
 		
@@ -88,14 +86,14 @@ public class YuGiOhAPIDeckAndCardsImpl implements YuGiOhAPIDeckAndCards{
 				relDeckCards.setCardNumber(Integer.toUnsignedLong((Integer) card.get("id")));
 				relDeckCards.setCard_price(Double.parseDouble((String) relation.get("set_price")));
 				relDeckCards.setCard_raridade((String) relation.get("set_rarity"));
-				relDeckCards.setCard_set_code((String) relation.get("set_code"));
+				relDeckCards.setCardSetCode((String) relation.get("set_code"));
 				relDeckCards.setDt_criacao(new Date());
 				relDeckCards.setIsSideDeck(false);
 			}				
 		}
 		
 		if(relDeckCards.getCard_price() == null || relDeckCards.getCard_raridade() == null
-				|| relDeckCards.getCard_set_code() == null )
+				|| relDeckCards.getCardSetCode() == null )
 			throw new EntityNotFoundException("No attribute values found for Relation Deck x Cards");
 			
 		return relDeckCards;

@@ -14,6 +14,7 @@ public class KonamiDeck implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private Long id;
+	private String requestSource;
 	private String imagem;
 	private String nome;
 	private String nomePortugues;
@@ -22,6 +23,8 @@ public class KonamiDeck implements Serializable {
 	private String setType;
 	private List<CardYuGiOhAPI> cardsToBeRegistered;
 	private List<RelDeckCards> relDeckCards;
+	private Integer setCollectionId;
+	private List<String> specificSetCodes;
 	 
 	
 	public Long getId() {
@@ -74,15 +77,32 @@ public class KonamiDeck implements Serializable {
 		this.cardsToBeRegistered = cardsToBeRegistered;
 	}
 	
+	public Integer getSetCollectionId() {
+		return setCollectionId;
+	}
+	public void setSetCollectionId(Integer setCollectionId) {
+		this.setCollectionId = setCollectionId;
+	}
+	
+	public List<String> getSpecificSetCodes() {
+		return specificSetCodes;
+	}
+	public void setSpecificSetCodes(List<String> specificSetCodes) {
+		this.specificSetCodes = specificSetCodes;
+	}
+	
 	@Override
 	public String toString() {
 		return "KonamiDeck [id=" + id + ", imagem=" + imagem + ", nome=" + nome + ", nomePortugues=" + nomePortugues
 				+ ", lancamento=" + lancamento + ", setType=" + setType + ", cardsToBeRegistered=" + cardsToBeRegistered
-				+ ", relDeckCards=" + relDeckCards + "]";
+				+ ", relDeckCards=" + relDeckCards + ", setCollectionId=" + setCollectionId + ", specificSetCodes="
+				+ specificSetCodes + "]";
 	}
-	
-	
-	
-	
-	
+	public String getRequestSource() {
+		return requestSource;
+	}
+	public void setRequestSource(String requestSource) {
+		this.requestSource = requestSource;
+	}
+
 }
