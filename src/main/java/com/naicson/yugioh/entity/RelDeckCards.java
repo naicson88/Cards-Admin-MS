@@ -14,7 +14,7 @@ public class RelDeckCards implements Serializable {
 	private String card_raridade;
 	private Date dt_criacao;
 	private Boolean isSideDeck;
-	private boolean isSpeedDuel;
+	private Boolean isSpeedDuel;
 	
 	public Long getId() {
 		return id;

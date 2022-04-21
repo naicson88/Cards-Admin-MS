@@ -36,8 +36,7 @@ public class DeckServiceImpl implements DeckService {
 		
 		if(listRelDeckCards == null || listRelDeckCards.size() == 0)	
 			throw new IllegalArgumentException("Informed Relation Deck x Cards is invalid!");
-		
-		
+				
 		//It necessary to check if all cards are already registered in cards' table
 		Long[] cardsNotRegistered = cardService.verifyCardsNotRegistered(listRelDeckCards, token);
 		List<Long> listCardsNotRegistered =  Arrays.asList(cardsNotRegistered);
@@ -50,6 +49,11 @@ public class DeckServiceImpl implements DeckService {
 		if(konamiDeck.getSpecificSetCodes() != null && konamiDeck.getSpecificSetCodes().size() > 0)
 			konamiDeck = this.removeCardsBasedOnSetCode(konamiDeck);
 		
+		if(konamiDeck.getIsSpeedDuel())
+			konamiDeck.getRelDeckCards().forEach(rel ->rel.setIsSpeedDuel(true));
+		else
+			konamiDeck.getRelDeckCards().forEach(rel ->rel.setIsSpeedDuel(false));
+			
 		return konamiDeck;
 		
 	}
