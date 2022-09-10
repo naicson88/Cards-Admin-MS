@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.naicson.yugioh.entity.RelDeckCards;
 
@@ -14,11 +15,12 @@ public class KonamiDeck implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private Long id;
+	@JsonAlias("requestSource")
 	private String requestSource;
 	private String imagem;
 	private String nome;
 	private String nomePortugues;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
 	private Date lancamento;
 	private String setType;
 	private List<CardYuGiOhAPI> cardsToBeRegistered;

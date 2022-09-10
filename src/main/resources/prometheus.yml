@@ -1,0 +1,12 @@
+global:
+  scrape_interval: 5s ##Tempo que fica verificando os dados
+
+scrape_configs:
+  - job_name: "api-admin-cards"
+    metrics_path: "/actuator/prometheus"
+    static_configs:
+     # - targets: ["localhost:8081"]
+       - targets: ["host.docker.internal:8081"]
+         labels:
+          application: "api-admin"
+  

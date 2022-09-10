@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import com.naicson.yugioh.dto.CardYuGiOhAPI;
 import com.naicson.yugioh.entity.RelDeckCards;
 import com.naicson.yugioh.resttemplates.CardRestTemplate;
-import com.naicson.yugioh.resttemplates.YuGiOhAPICardsRestTemplate;
 import com.naicson.yugioh.service.interfaces.CardServiceDetail;
 import com.naicson.yugioh.service.yugiohAPI.YuGiOhAPICardsImpl;
 

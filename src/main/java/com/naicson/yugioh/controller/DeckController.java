@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.naicson.yugioh.configs.RabbitMQConstantes;
 import com.naicson.yugioh.dto.KonamiDeck;
-import com.naicson.yugioh.dto.KonamiDeckWithDTO;
 import com.naicson.yugioh.entity.RelDeckCards;
 import com.naicson.yugioh.resttemplates.DeckRestTemplate;
 import com.naicson.yugioh.service.DeckServiceImpl;

@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.stereotype.Service;
 
 import com.naicson.yugioh.dto.KonamiDeck;
@@ -77,6 +75,9 @@ public class DeckServiceImpl implements DeckService {
 		
 		if(kDeck.getSetType() == null || kDeck.getSetType().isEmpty()) 			
 			throw new IllegalArgumentException("Informed Deck SetType is invalid");	
+		
+		if(kDeck.getIsSpeedDuel() == null)
+			kDeck.setIsSpeedDuel(false);
 	}
 	
 	
