@@ -25,8 +25,6 @@ public class KonamiDeck implements Serializable {
 	private String setType;
 	private List<CardYuGiOhAPI> cardsToBeRegistered;
 	private List<RelDeckCards> relDeckCards;
-	private Integer setCollectionId;
-	private List<String> specificSetCodes;
 	private Boolean isSpeedDuel;
 	 
 	
@@ -79,29 +77,7 @@ public class KonamiDeck implements Serializable {
 	public void setCardsToBeRegistered(List<CardYuGiOhAPI> cardsToBeRegistered) {
 		this.cardsToBeRegistered = cardsToBeRegistered;
 	}
-	
-	public Integer getSetCollectionId() {
-		return setCollectionId;
-	}
-	public void setSetCollectionId(Integer setCollectionId) {
-		this.setCollectionId = setCollectionId;
-	}
-	
-	public List<String> getSpecificSetCodes() {
-		return specificSetCodes;
-	}
-	public void setSpecificSetCodes(List<String> specificSetCodes) {
-		this.specificSetCodes = specificSetCodes;
-	}
-	
-	@Override
-	public String toString() {
-		return "KonamiDeck [id=" + id + ", requestSource=" + requestSource + ", imagem=" + imagem + ", nome=" + nome
-				+ ", nomePortugues=" + nomePortugues + ", lancamento=" + lancamento + ", setType=" + setType
-				+ ", cardsToBeRegistered=" + cardsToBeRegistered + ", relDeckCards=" + relDeckCards
-				+ ", setCollectionId=" + setCollectionId + ", specificSetCodes=" + specificSetCodes + ", isSpeedDuel="
-				+ isSpeedDuel + "]";
-	}
+
 	public String getRequestSource() {
 		return requestSource;
 	}

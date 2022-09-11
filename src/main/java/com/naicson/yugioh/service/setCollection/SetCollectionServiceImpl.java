@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.naicson.yugioh.dto.SetCollectionDto;
 import com.naicson.yugioh.service.DeckServiceImpl;
 import com.naicson.yugioh.service.interfaces.SetCollectionService;
-import com.naicson.yugioh.util.exceptions.ErrorMessage;
 
 @Service
 public class SetCollectionServiceImpl implements SetCollectionService{
@@ -33,9 +32,6 @@ public class SetCollectionServiceImpl implements SetCollectionService{
 		
 		if(collection == null) 
 			throw new IllegalArgumentException("Invalid SetCollection.");
-							
-		if(collection.getOnlyDefaultDeck() == null) 
-			throw new IllegalArgumentException("Invalid value for Only Defaul Deck");			
 					
 		if(collection.getImgPath() == null || collection.getImgPath().isBlank()) 
 			throw new IllegalArgumentException("Invalid Image Path");	

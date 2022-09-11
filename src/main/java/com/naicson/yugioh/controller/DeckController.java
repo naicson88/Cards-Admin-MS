@@ -2,6 +2,8 @@ package com.naicson.yugioh.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.naicson.yugioh.configs.RabbitMQConstantes;
+import com.naicson.yugioh.dto.CollectionDeck;
 import com.naicson.yugioh.dto.KonamiDeck;
 import com.naicson.yugioh.entity.RelDeckCards;
 import com.naicson.yugioh.resttemplates.DeckRestTemplate;
@@ -35,6 +39,9 @@ public class DeckController {
 	@Autowired
 	private YuGiOhAPIDeckAndCardsImpl apiService;
 	
+	
+	Logger logger = LoggerFactory.getLogger(DeckController.class);
+	
 	@PostMapping("/new-deck")
 	public ResponseEntity<KonamiDeck> registerNewDeck(@RequestBody KonamiDeck kDeck, @RequestHeader("Authorization") String token){
 		KonamiDeck createdKonamiDeck = deckService.createNewKonamiDeckWithCards(kDeck, token);
@@ -44,6 +51,14 @@ public class DeckController {
 		return new ResponseEntity<KonamiDeck>(createdKonamiDeck, HttpStatus.OK);
 	}
 	
+	@PostMapping("/new-deck-collection")
+	public ResponseEntity<CollectionDeck> registerCollectionDeck(@RequestBody CollectionDeck cDeck, @RequestHeader("Authorization") String token){
+		CollectionDeck createCollectionDeck = deckService.createNewCollectionDeck(cDeck, token);
+		logger.info("DTO: {} ", createCollectionDeck);
+		this.rabbitService.sendMessageAsJson(RabbitMQConstantes.DECK_COLLECTION_QUEUE, createCollectionDeck);
+		
+		return new ResponseEntity<CollectionDeck>(createCollectionDeck, HttpStatus.OK);
+	}
 	
 	@GetMapping("/api")
 	public List<RelDeckCards> consultingAPI(@RequestParam("setName") String setName){

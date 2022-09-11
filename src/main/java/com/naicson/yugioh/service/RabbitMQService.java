@@ -19,6 +19,7 @@ public class RabbitMQService {
 		ObjectMapper mapper = new ObjectMapper();
 		
 		try {
+			
 			String json = mapper.writeValueAsString(message);
 			this.template.convertAndSend(queueName, json);
 			

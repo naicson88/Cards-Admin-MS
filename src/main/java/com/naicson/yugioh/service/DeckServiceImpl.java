@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.naicson.yugioh.dto.CollectionDeck;
 import com.naicson.yugioh.dto.KonamiDeck;
 import com.naicson.yugioh.entity.RelDeckCards;
 import com.naicson.yugioh.service.interfaces.DeckService;
@@ -44,9 +46,6 @@ public class DeckServiceImpl implements DeckService {
 		
 		konamiDeck.setRelDeckCards(listRelDeckCards);
 		
-		if(konamiDeck.getSpecificSetCodes() != null && konamiDeck.getSpecificSetCodes().size() > 0)
-			konamiDeck = this.removeCardsBasedOnSetCode(konamiDeck);
-		
 		if(konamiDeck.getIsSpeedDuel())
 			konamiDeck.getRelDeckCards().forEach(rel ->rel.setIsSpeedDuel(true));
 		else
@@ -80,27 +79,35 @@ public class DeckServiceImpl implements DeckService {
 			kDeck.setIsSpeedDuel(false);
 	}
 	
-	
-	@Override
-	public KonamiDeck removeCardsBasedOnSetCode(KonamiDeck kDeck) {
+	public CollectionDeck createNewCollectionDeck(CollectionDeck cDeck, String token) {
 		
-		if(kDeck.getSpecificSetCodes() == null || kDeck.getSpecificSetCodes().size() == 0) 
-			return kDeck;
-			
-			List<RelDeckCards> newRelDeckCards = new ArrayList<>();
-			
-			kDeck.getRelDeckCards().stream().forEach(rel -> {
-				if(kDeck.getSpecificSetCodes().contains(rel.getCardSetCode().trim()))
-					newRelDeckCards.add(rel);				
-			});
-			
-			if(newRelDeckCards != null && newRelDeckCards.size() > 0) {
-				kDeck.getRelDeckCards().clear();
-				kDeck.setRelDeckCards(newRelDeckCards);
-			}
-			
-		return kDeck;	
+		List<RelDeckCards> listRelDeckCards = new ArrayList<>();
 		
+		if(cDeck.getFilterSetCode() != null && !cDeck.getFilterSetCode().isBlank()) {
+			listRelDeckCards = apiService.consultCardsOfADeckInYuGiOhAPI(cDeck.getRequestSource())
+					.stream()
+					.filter(rel -> rel.getCardSetCode().contains(cDeck.getFilterSetCode()))
+					.collect(Collectors.toList());
+		} else {
+			listRelDeckCards = apiService.consultCardsOfADeckInYuGiOhAPI(cDeck.getRequestSource());
+		}
+		
+		//It necessary to check if all cards are already registered in cards' table
+		Long[] cardsNotRegistered = cardService.verifyCardsNotRegistered(listRelDeckCards, token);
+		List<Long> listCardsNotRegistered =  Arrays.asList(cardsNotRegistered);
+		
+		if(cardsNotRegistered != null && cardsNotRegistered.length > 0)
+			cDeck.setCardsToBeRegistered(cardService.getCardsToBeRegistered(listCardsNotRegistered));	
+		
+		cDeck.setRelDeckCards(listRelDeckCards);
+		
+		if(cDeck.getIsSpeedDuel())
+			cDeck.getRelDeckCards().forEach(rel ->rel.setIsSpeedDuel(true));
+		else
+			cDeck.getRelDeckCards().forEach(rel ->rel.setIsSpeedDuel(false));
+			
+		return cDeck;
+					
 	}
 	
 }
