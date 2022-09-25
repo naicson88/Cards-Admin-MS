@@ -94,7 +94,8 @@ public class DeckServiceImpl implements DeckService {
 		
 		//It necessary to check if all cards are already registered in cards' table
 		Long[] cardsNotRegistered = cardService.verifyCardsNotRegistered(listRelDeckCards, token);
-		List<Long> listCardsNotRegistered =  Arrays.asList(cardsNotRegistered);
+		List<Long> listCardsNotRegistered =  Arrays.asList(cardsNotRegistered)
+				.stream().distinct().collect(Collectors.toList());
 		
 		if(cardsNotRegistered != null && cardsNotRegistered.length > 0)
 			cDeck.setCardsToBeRegistered(cardService.getCardsToBeRegistered(listCardsNotRegistered));	

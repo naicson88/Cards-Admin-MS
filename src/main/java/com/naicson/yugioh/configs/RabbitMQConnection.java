@@ -38,6 +38,7 @@ public class RabbitMQConnection {
 		this.createDeckQueue();
 		this.createSetCollectionQueue();
 		this.createDeckCollectionQueue();
+		this.createCardQueue();
 	}
 	
 	private void createDeckQueue() {
@@ -81,6 +82,20 @@ public class RabbitMQConnection {
 		this.amqAdmin.declareExchange(change);
 		
 		this.amqAdmin.declareBinding(collectionBinding);	
+	}
+	
+	private void createCardQueue() {
+		Queue cardQueue = this.queue(RabbitMQConstantes.CARD_QUEUE);
+		DirectExchange change = this.directExchange();
+		
+		Binding cardBinding = this.relationship(cardQueue, change);
+		
+		//Creating RabbitMQ Queues
+		this.amqAdmin.declareQueue(cardQueue);
+		
+		this.amqAdmin.declareExchange(change);
+		
+		this.amqAdmin.declareBinding(cardBinding);	
 	}
 	
 }

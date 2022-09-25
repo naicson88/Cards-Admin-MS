@@ -12,9 +12,14 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.naicson.yugioh.configs.RabbitMQConstantes;
+import com.naicson.yugioh.dto.AddNewCardToDeckDTO;
 import com.naicson.yugioh.dto.CardYuGiOhAPI;
+import com.naicson.yugioh.dto.CollectionDeck;
 import com.naicson.yugioh.resttemplates.CardRestTemplate;
 import com.naicson.yugioh.service.CardServiceDetailImpl;
+import com.naicson.yugioh.service.CardServiceImpl;
+import com.naicson.yugioh.service.RabbitMQService;
 
 @RestController
 @RequestMapping({ "v1/admin/card" })
@@ -25,7 +30,13 @@ public class CardController {
 	private CardRestTemplate cardRestTemplate;
 	
 	@Autowired
-	private CardServiceDetailImpl cardService;
+	private CardServiceDetailImpl cardServiceDetail;
+	
+	@Autowired
+	private CardServiceImpl cardService;
+	
+	@Autowired
+	private RabbitMQService rabbitService;
 	
 	@PostMapping("/consult-cards")
 	public ResponseEntity<Long[]> consultNotRegisteredCards(@RequestBody List<Long> cardsNumbers,  @RequestHeader("Authorization") String token){
@@ -37,8 +48,18 @@ public class CardController {
 	@PostMapping("cards-not-registered")
 	public ResponseEntity<List<CardYuGiOhAPI>> consultCardsYuGiOhAPINotRegistered(@RequestBody List<Long> cardsNumbers) {
 		
-		List<CardYuGiOhAPI> list = this.cardService.getCardsToBeRegistered(cardsNumbers);
+		List<CardYuGiOhAPI> list = this.cardServiceDetail.getCardsToBeRegistered(cardsNumbers);
 		
 		return new ResponseEntity<List<CardYuGiOhAPI>>(list, HttpStatus.OK);
+	}
+	
+	@PostMapping("/add-new-card-to-deck")
+	public ResponseEntity<AddNewCardToDeckDTO> addNewCardToDeck(@RequestBody AddNewCardToDeckDTO card, @RequestHeader("Authorization") String token){
+		AddNewCardToDeckDTO cardAdded = cardService.addNewCardToDeck(card, token);
+		
+		this.rabbitService.sendMessageAsJson(RabbitMQConstantes.CARD_QUEUE, cardAdded);
+		
+		return new ResponseEntity<AddNewCardToDeckDTO>(cardAdded, HttpStatus.CREATED);
+		
 	}
 }
