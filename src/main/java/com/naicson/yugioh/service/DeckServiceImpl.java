@@ -80,14 +80,10 @@ public class DeckServiceImpl implements DeckService {
 	}
 	
 	public CollectionDeck createNewCollectionDeck(CollectionDeck cDeck, String token) {
-		
 		List<RelDeckCards> listRelDeckCards = new ArrayList<>();
 		
 		if(cDeck.getFilterSetCode() != null && !cDeck.getFilterSetCode().isBlank()) {
-			listRelDeckCards = apiService.consultCardsOfADeckInYuGiOhAPI(cDeck.getRequestSource())
-					.stream()
-					.filter(rel -> rel.getCardSetCode().contains(cDeck.getFilterSetCode()))
-					.collect(Collectors.toList());
+			listRelDeckCards = this.getFilteredCards(cDeck);
 		} else {
 			listRelDeckCards = apiService.consultCardsOfADeckInYuGiOhAPI(cDeck.getRequestSource());
 		}
@@ -109,6 +105,25 @@ public class DeckServiceImpl implements DeckService {
 			
 		return cDeck;
 					
+	}
+	
+	private List<RelDeckCards> getFilteredCards(CollectionDeck cDeck) {
+		
+		List<RelDeckCards> listRelDeckCards = new ArrayList<>();
+		String[] filtersSetCode = cDeck.getFilterSetCode().split(";");
+		
+		apiService.consultCardsOfADeckInYuGiOhAPI(cDeck.getRequestSource())
+		.stream()
+		.forEach(rel -> {
+			for(String set : filtersSetCode) {
+				if(rel.getCardSetCode().contains(set)) {
+					listRelDeckCards.add(rel);
+					break;
+				}				
+			}
+		});
+		
+		return listRelDeckCards;
 	}
 	
 }

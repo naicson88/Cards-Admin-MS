@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
@@ -26,6 +27,8 @@ public class KonamiDeck implements Serializable {
 	private List<CardYuGiOhAPI> cardsToBeRegistered;
 	private List<RelDeckCards> relDeckCards;
 	private Boolean isSpeedDuel;
+	@JsonAlias("isBasedDeck")
+	private Boolean isBasedDeck;
 	 
 	
 	public Long getId() {
@@ -89,6 +92,12 @@ public class KonamiDeck implements Serializable {
 	}
 	public void setIsSpeedDuel(Boolean isSpeedDuel) {
 		this.isSpeedDuel = isSpeedDuel;
+	}
+	public Boolean getIsBasedDeck() {
+		return isBasedDeck;
+	}
+	public void setIsBasedDeck(Boolean isBasedDeck) {
+		this.isBasedDeck = isBasedDeck;
 	}
 	
 	
