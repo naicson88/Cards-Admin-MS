@@ -2,17 +2,27 @@ package com.naicson.yugioh.dto;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class SetCollectionDto {
 	
+	@NotBlank(message = "Name cannot be empty")
 	private String name;
+	@NotBlank(message = "Portuguese Name cannot be empty")
 	private String portugueseName;
+	@NotBlank(message = "Image Path cannot be empty")
 	private String imgPath;
+	@NotBlank(message = "Request Source cannot be empty")
 	private String requestSource;
+	@NotNull(message = "Release Date cannot be empty")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
 	private Date releaseDate;
+	@NotBlank(message = "SetType cannot be empty")
 	private String setType;
+	@NotNull(message = "isSpeedDuel cannot be empty")
 	private Boolean isSpeedDuel;
 	
 	public String getName() {

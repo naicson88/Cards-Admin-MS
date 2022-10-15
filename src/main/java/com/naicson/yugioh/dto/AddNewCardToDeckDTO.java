@@ -2,16 +2,28 @@ package com.naicson.yugioh.dto;
 
 import java.util.List;
 
-public class AddNewCardToDeckDTO {
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
+public class AddNewCardToDeckDTO {
+	
+	@NotBlank(message = "Card Name cannot be empty")
 	private String name;
+	@NotNull(message = "Card Number cannot be empty")
 	private Long number;
+	@NotNull(message = "Deck ID cannot be empty")
 	private Long deckId;
+	@NotBlank(message = "Card Rarity cannot be empty")
 	private String rarity;
+	@NotBlank(message = "Card Rarity Code cannot be empty")
 	private String rarityCode;
+	@NotBlank(message = "Card Rarity Details cannot be empty")
 	private String rarityDetails;
+	@NotBlank(message = "Card SetCode cannot be empty")
 	private String cardSetCode;
+	@NotNull(message = "isSpeedDuel cannot be empty")
 	private Boolean isSpeedDuel;
+	@NotNull(message = "Price cannot be empty")
 	private double price;
 	private List<CardYuGiOhAPI> cardsToBeRegistered;
 	

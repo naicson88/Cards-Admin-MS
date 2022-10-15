@@ -73,15 +73,12 @@ public class CardServiceDetailImpl implements CardServiceDetail {
 
 	private void validVerifyCardsNotRegisteredMethod(List<RelDeckCards> listRelDeckCards, String token) {
 
-		if (listRelDeckCards == null || listRelDeckCards.isEmpty()) {
-			logger.error("Invalid KonamiDeck informed.");
+		if (listRelDeckCards == null || listRelDeckCards.isEmpty()) 
 			throw new IllegalArgumentException("Invalid KonamiDeck informed.");
-		}
-
-		if (token == null || token.isEmpty()) {
-			logger.error("Invalid Token");
+		
+		if (token == null || token.isEmpty()) 
 			throw new IllegalArgumentException("Invalid Token");
-		}
+	
 	}
 
 	

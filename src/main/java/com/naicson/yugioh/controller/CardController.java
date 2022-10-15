@@ -2,6 +2,8 @@ package com.naicson.yugioh.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.naicson.yugioh.configs.RabbitMQConstantes;
 import com.naicson.yugioh.dto.AddNewCardToDeckDTO;
 import com.naicson.yugioh.dto.CardYuGiOhAPI;
-import com.naicson.yugioh.dto.CollectionDeck;
 import com.naicson.yugioh.resttemplates.CardRestTemplate;
 import com.naicson.yugioh.service.CardServiceDetailImpl;
 import com.naicson.yugioh.service.CardServiceImpl;
@@ -54,7 +55,7 @@ public class CardController {
 	}
 	
 	@PostMapping("/add-new-card-to-deck")
-	public ResponseEntity<AddNewCardToDeckDTO> addNewCardToDeck(@RequestBody AddNewCardToDeckDTO card, @RequestHeader("Authorization") String token){
+	public ResponseEntity<AddNewCardToDeckDTO> addNewCardToDeck(@Valid @RequestBody AddNewCardToDeckDTO card, @RequestHeader("Authorization") String token){
 		AddNewCardToDeckDTO cardAdded = cardService.addNewCardToDeck(card, token);
 		
 		this.rabbitService.sendMessageAsJson(RabbitMQConstantes.CARD_QUEUE, cardAdded);

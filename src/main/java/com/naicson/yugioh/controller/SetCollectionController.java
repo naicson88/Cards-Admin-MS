@@ -1,5 +1,7 @@
 package com.naicson.yugioh.controller;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +33,12 @@ public class SetCollectionController {
 	Logger logger = LoggerFactory.getLogger(SetCollectionController.class);
 	
 	@PostMapping("/new-collection")
-	public ResponseEntity<SetCollectionDto> newSetCollection(@RequestBody SetCollectionDto collection,
+	public ResponseEntity<SetCollectionDto> newSetCollection(@Valid @RequestBody SetCollectionDto collection,
 			@RequestHeader("Authorization") String token) {
 		
 		logger.info("Starting creating new SetCollection...");
 		
 		collection = collectionService.createNewSetCollection(collection, token);
-		logger.info("DTO: {} ", collection);
 		this.rabbitService.sendMessageAsJson(RabbitMQConstantes.SETCOLLECTION_QUEUE, collection);
 		
 		logger.info("Message sent successfully to SETCOLLECTION Queue");
