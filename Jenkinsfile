@@ -12,7 +12,7 @@ pipeline {
   stages {
     stage("Clone Repository") {
       steps {
-        git 'https://github.com/naicson88/Cards-API-Gateway.git'
+        git 'https://github.com/naicson88/Cards-Admin-MS.git'
       }
     }
     stage("Build") {
@@ -50,7 +50,7 @@ pipeline {
       steps {
         script {
           // build docker image
-          dockerImage = docker.build("cards_gateway:${env.BUILD_NUMBER}")
+          dockerImage = docker.build("cards_admin:${env.BUILD_NUMBER}")
         }
       }
     }
@@ -62,15 +62,15 @@ pipeline {
 
           echo "Docker Image Tag Name: ${dockerImageTag}"
 
-          def inspectExitCode = sh script: "docker service inspect cards_gateway", returnStatus: true
+          def inspectExitCode = sh script: "docker service inspect cards_admin", returnStatus: true
 
           if (inspectExitCode > 0) {
           	echo "Removing Container..."
-            sh "docker stop cards_gateway"
-            sh "docker rm cards_gateway"
+            sh "docker stop cards_admin"
+            sh "docker rm cards_admin"
           }
 
-          sh "docker run --name cards_gateway -d -p 2222:2222 cards_gateway:${env.BUILD_NUMBER}"
+          sh "docker run --name cards_admin -d -p 8081:8081 cards_admin:${env.BUILD_NUMBER}"
 
           // docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
           //    dockerImage.push("${env.BUILD_NUMBER}")
@@ -78,7 +78,6 @@ pipeline {
           //  }
         }
       }
-
     }
 
   }
