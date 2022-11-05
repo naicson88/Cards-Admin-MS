@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.anyString;
 
 import java.util.List;
 
@@ -37,9 +38,6 @@ public class CardServiceImplTest {
 	@Mock
 	CardServiceDetailImpl cardServiceImpl;
 	
-	@Mock
-	RelDeckCards rel;
-	
 	@BeforeEach
 	public void setup(){
 	    MockitoAnnotations.openMocks(this); 
@@ -54,7 +52,7 @@ public class CardServiceImplTest {
 		AddNewCardToDeckDTO dto = AddNewCardToDeckDTOMock.newCard();
 		List<CardYuGiOhAPI> list = List.of(CardYuGiOhAPIMock.createCardYuGiOh(), CardYuGiOhAPIMock.createCardYuGiOh());
 		//When	
-		Mockito.when(cardServiceImpl.verifyCardsNotRegistered(List.of(rel), token)).thenReturn(cardsNotRegistered);
+		Mockito.when(cardServiceImpl.verifyCardsNotRegistered(anyList(), anyString())).thenReturn(cardsNotRegistered);
 		Mockito.when(cardServiceImpl.getCardsToBeRegistered(anyList())).thenReturn(list);		
 		AddNewCardToDeckDTO card = cardService.addNewCardToDeck(dto, token);	
 		//Then

@@ -12,16 +12,14 @@ import com.naicson.yugioh.entity.RelDeckCards;
 public class CardServiceImpl {
 	
 	CardServiceDetailImpl cardService;
-	RelDeckCards rel;
 	
-	public CardServiceImpl(CardServiceDetailImpl cardService, RelDeckCards rel) {
+	public CardServiceImpl(CardServiceDetailImpl cardService) {
 		this.cardService = cardService;
-		this.rel = rel;
 	}
 	
 	public AddNewCardToDeckDTO addNewCardToDeck(AddNewCardToDeckDTO card, String token) {
 		
-		//RelDeckCards rel = new RelDeckCards();
+		RelDeckCards rel = new RelDeckCards();
 		rel.setCardNumber(card.getNumber());
 		
 		Long[] cardsNotRegistered = cardService.verifyCardsNotRegistered(List.of(rel), token);
