@@ -2,7 +2,6 @@ package com.naicson.yugioh.service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,7 +29,6 @@ public class DeckServiceImpl implements DeckService {
 
 	@Override
 	public KonamiDeck createNewKonamiDeckWithCards(KonamiDeck konamiDeck, String token) {
-		this.validKonamiDeck(konamiDeck);
 		
 		List<RelDeckCards> listRelDeckCards = apiService.consultCardsOfADeckInYuGiOhAPI(konamiDeck.getRequestSource());
 		
@@ -38,73 +36,55 @@ public class DeckServiceImpl implements DeckService {
 			throw new IllegalArgumentException("Informed Relation Deck x Cards is invalid!");
 				
 		//It necessary to check if all cards are already registered in cards' table
-		Long[] cardsNotRegistered = cardService.verifyCardsNotRegistered(listRelDeckCards, token);
-		List<Long> listCardsNotRegistered =  Arrays.asList(cardsNotRegistered);
+		List<Long> listCardsNotRegistered = checkCardsNotRegistered(listRelDeckCards, token);
 		
-		if(cardsNotRegistered != null && cardsNotRegistered.length > 0)
+		if(listCardsNotRegistered != null && !listCardsNotRegistered.isEmpty())
 			konamiDeck.setCardsToBeRegistered(cardService.getCardsToBeRegistered(listCardsNotRegistered));	
 		
 		konamiDeck.setRelDeckCards(listRelDeckCards);
 		
-		if(konamiDeck.getIsSpeedDuel())
-			konamiDeck.getRelDeckCards().forEach(rel ->rel.setIsSpeedDuel(true));
-		else
-			konamiDeck.getRelDeckCards().forEach(rel ->rel.setIsSpeedDuel(false));
+		konamiDeck.getRelDeckCards().forEach(rel -> rel.setIsSpeedDuel(konamiDeck.getIsSpeedDuel()));
 			
-		return konamiDeck;
-		
+		return konamiDeck;		
 	}
 	
-	private void validKonamiDeck(KonamiDeck kDeck) {
-		
-		if(kDeck == null) 
-			throw new IllegalArgumentException("Informed Deck is invalid");
-			
-		if (kDeck.getImagem() == null || kDeck.getImagem().isEmpty()) 			
-			throw new IllegalArgumentException("Informed Deck Image is invalid");		
-		
-		if(kDeck.getLancamento() == null || kDeck.getLancamento().after(new Date()) ) 
-			throw new IllegalArgumentException("Informed Deck Lancamento is invalid");		
-		
-		if(kDeck.getNome() == null || kDeck.getNome().isEmpty()) 			
-			throw new IllegalArgumentException("Informed Deck Name is invalid");		
-		
-		if(kDeck.getNomePortugues() == null || kDeck.getNomePortugues().isEmpty()) 		
-			throw new IllegalArgumentException("Informed Deck Nome Portugues is invalid");		
-		
-		if(kDeck.getSetType() == null || kDeck.getSetType().isEmpty()) 			
-			throw new IllegalArgumentException("Informed Deck SetType is invalid");	
-		
-		if(kDeck.getIsSpeedDuel() == null)
-			kDeck.setIsSpeedDuel(false);
-	}
 	
 	public CollectionDeck createNewCollectionDeck(CollectionDeck cDeck, String token) {
-		List<RelDeckCards> listRelDeckCards = new ArrayList<>();
 		
+		List<RelDeckCards> listRelDeckCards = getListRelDeckCardsForNewCollectionDeck(cDeck);
+		
+		//It necessary to check if all cards are already registered in cards' table
+		List<Long> listCardsNotRegistered = checkCardsNotRegistered(listRelDeckCards, token);
+		
+		if(listCardsNotRegistered != null && !listCardsNotRegistered.isEmpty())
+			cDeck.setCardsToBeRegistered(cardService.getCardsToBeRegistered(listCardsNotRegistered));	
+		
+		cDeck.setRelDeckCards(listRelDeckCards);
+		
+		cDeck.getRelDeckCards().forEach(rel -> rel.setIsSpeedDuel(cDeck.getIsSpeedDuel()));
+			
+		return cDeck;
+					
+	}
+	
+	private List<Long> checkCardsNotRegistered(List<RelDeckCards> listRelDeckCards, String token) {
+		
+		Long[] cardsNotRegistered = cardService.verifyCardsNotRegistered(listRelDeckCards, token);
+		List<Long> listCardsNotRegistered =  Arrays.asList(cardsNotRegistered)
+				.stream().distinct().collect(Collectors.toList());
+		
+		return listCardsNotRegistered;
+	}
+
+	private List<RelDeckCards> getListRelDeckCardsForNewCollectionDeck(CollectionDeck cDeck) {
+		
+		List<RelDeckCards> listRelDeckCards;
 		if(cDeck.getFilterSetCode() != null && !cDeck.getFilterSetCode().isBlank()) {
 			listRelDeckCards = this.getFilteredCards(cDeck);
 		} else {
 			listRelDeckCards = apiService.consultCardsOfADeckInYuGiOhAPI(cDeck.getRequestSource());
 		}
-		
-		//It necessary to check if all cards are already registered in cards' table
-		Long[] cardsNotRegistered = cardService.verifyCardsNotRegistered(listRelDeckCards, token);
-		List<Long> listCardsNotRegistered =  Arrays.asList(cardsNotRegistered)
-				.stream().distinct().collect(Collectors.toList());
-		
-		if(cardsNotRegistered != null && cardsNotRegistered.length > 0)
-			cDeck.setCardsToBeRegistered(cardService.getCardsToBeRegistered(listCardsNotRegistered));	
-		
-		cDeck.setRelDeckCards(listRelDeckCards);
-		
-		if(cDeck.getIsSpeedDuel())
-			cDeck.getRelDeckCards().forEach(rel ->rel.setIsSpeedDuel(true));
-		else
-			cDeck.getRelDeckCards().forEach(rel ->rel.setIsSpeedDuel(false));
-			
-		return cDeck;
-					
+		return listRelDeckCards;
 	}
 	
 	private List<RelDeckCards> getFilteredCards(CollectionDeck cDeck) {

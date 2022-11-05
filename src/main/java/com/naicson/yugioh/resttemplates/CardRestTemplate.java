@@ -32,9 +32,6 @@ public class CardRestTemplate {
 				.path("yugiohAPI/cards/search-cards-not-registered")
 				.queryParam("cardNumbers", cardsOfDeck)
 				.build();
-		
-	 /* ResponseEntity<Long[]> entity = restTemplate.exchange(uri.toUriString(), HttpMethod.POST, 
-				 new HttpEntity<Object>(header), Long[].class)*/
 	
 		ResponseEntity<Long[]> response = restTemplate.postForEntity(uri.toString(), entity, Long[].class);
 	  

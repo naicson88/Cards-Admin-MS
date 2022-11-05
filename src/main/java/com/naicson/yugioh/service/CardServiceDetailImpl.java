@@ -55,6 +55,14 @@ public class CardServiceDetailImpl implements CardServiceDetail {
 		return cardsNotRegistered.getBody();
 
 	}
+
+	private void validVerifyCardsNotRegisteredMethod(List<RelDeckCards> listRelDeckCards, String token) {
+		if (listRelDeckCards == null || listRelDeckCards.isEmpty()) 
+			throw new IllegalArgumentException("Invalid KonamiDeck informed.");
+		
+		if (token == null || token.isEmpty()) 
+			throw new IllegalArgumentException("Invalid Token");
+	}
 	
 	@Override
 	public List<Long> getCardsNumberFromListRelDeckCards(List<RelDeckCards> listRelDeckCards) {
@@ -71,25 +79,13 @@ public class CardServiceDetailImpl implements CardServiceDetail {
 
 	}
 
-	private void validVerifyCardsNotRegisteredMethod(List<RelDeckCards> listRelDeckCards, String token) {
-
-		if (listRelDeckCards == null || listRelDeckCards.isEmpty()) 
-			throw new IllegalArgumentException("Invalid KonamiDeck informed.");
-		
-		if (token == null || token.isEmpty()) 
-			throw new IllegalArgumentException("Invalid Token");
-	
-	}
-
 	
 	@Override
 	public List<CardYuGiOhAPI> getCardsToBeRegistered(List<Long> cardsNotRegistered) {
 		
-		if(cardsNotRegistered == null || cardsNotRegistered.size() == 0) {
-			logger.error("Invalid Cards Not Registered");
+		if(cardsNotRegistered == null || cardsNotRegistered.size() == 0)
 			throw new IllegalArgumentException("Invalid Cards Not Registered");
-		}
-			
+				
 		List<CardYuGiOhAPI> cardsToBeRegistered = new LinkedList<>();
 		
 		for(Long n : cardsNotRegistered) {

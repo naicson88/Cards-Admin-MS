@@ -64,12 +64,12 @@ public class ApiExceptionHandler {
 		}
 			
 		@ExceptionHandler(value = {SQLException.class})
-			public ResponseEntity<Object> handleSQLException(SQLException sql){
-				ApiExceptions ex = new ApiExceptions(sql.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value(),  HttpStatus.INTERNAL_SERVER_ERROR, this.time);
-				logger.error("SQLException: " + ex.getMsg());
-				
-				return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
-			}
+		public ResponseEntity<Object> handleSQLException(SQLException sql){
+			ApiExceptions ex = new ApiExceptions(sql.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value(),  HttpStatus.INTERNAL_SERVER_ERROR, this.time);
+			logger.error("SQLException: " + ex.getMsg());
+			
+			return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 		
 		@ExceptionHandler(value = {ErrorMessage.class})
 		public ResponseEntity<Object> handleErrorMessage(ErrorMessage em){

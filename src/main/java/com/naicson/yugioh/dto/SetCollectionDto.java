@@ -11,7 +11,7 @@ public class SetCollectionDto {
 	
 	@NotBlank(message = "Name cannot be empty")
 	private String name;
-	@NotBlank(message = "Portuguese Name cannot be empty")
+	//@NotBlank(message = "Portuguese Name cannot be empty")
 	private String portugueseName;
 	@NotBlank(message = "Image Path cannot be empty")
 	private String imgPath;
@@ -24,6 +24,8 @@ public class SetCollectionDto {
 	private String setType;
 	@NotNull(message = "isSpeedDuel cannot be empty")
 	private Boolean isSpeedDuel;
+	@NotBlank(message = "SetCode cannot be empty")
+	private String setCode;
 	
 	public String getName() {
 		return name;
@@ -69,6 +71,13 @@ public class SetCollectionDto {
 	public void setRequestSource(String requestSource) {
 		this.requestSource = requestSource;
 	}
+	public String getSetCode() {
+		return setCode;
+	}
+	public void setSetCode(String setCode) {
+		this.setCode = setCode;
+	}
 		
+	
 
 }

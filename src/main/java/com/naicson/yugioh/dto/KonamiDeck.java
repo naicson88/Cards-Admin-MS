@@ -25,21 +25,22 @@ public class KonamiDeck implements Serializable {
 	private String imagem;
 	@NotBlank(message = "Nome cannot be empty")
 	private String nome;
-	@NotBlank(message = "Portuguese Name cannot be empty")
+	//@NotBlank(message = "Portuguese Name cannot be empty")
 	private String nomePortugues;
 	@NotNull(message = "Release date cannot be empty")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
 	private Date lancamento;
 	@NotBlank(message = "SetType cannot be empty")
 	private String setType;
-	private List<CardYuGiOhAPI> cardsToBeRegistered;
-	private List<RelDeckCards> relDeckCards;
 	@NotNull(message = "isSpeedDuel cannot be empty")
 	private Boolean isSpeedDuel;
 	@NotNull(message = "isBasedDeck cannot be empty")
 	@JsonAlias("isBasedDeck")
 	private Boolean isBasedDeck;
-	 
+	@NotBlank(message = "SetCode cannot be empty")
+	private String setCode;
+	private List<CardYuGiOhAPI> cardsToBeRegistered;
+	private List<RelDeckCards> relDeckCards;
 	
 	public Long getId() {
 		return id;
@@ -108,6 +109,12 @@ public class KonamiDeck implements Serializable {
 	}
 	public void setIsBasedDeck(Boolean isBasedDeck) {
 		this.isBasedDeck = isBasedDeck;
+	}
+	public String getSetCode() {
+		return setCode;
+	}
+	public void setSetCode(String setCode) {
+		this.setCode = setCode;
 	}
 	
 	

@@ -1,7 +1,9 @@
-FROM openjdk:11
-COPY target/adminMS-0.0.1-SNAPSHOT.jar Yugioh-Admin.jar
+FROM adoptopenjdk/openjdk11:alpine
+COPY target/*.jar cards-admin.jar
 RUN echo "America/Fortaleza" > /etc/timezone
-ENTRYPOINT ["java","-jar","/Yugioh-Admin.jar"]
+#ENTRYPOINT ["java", "-jar","/cards-gateway.jar"]
+ENTRYPOINT ["java", "-DLOCAL_IP=192.168.1.8", "-jar","/cards-admin.jar"]
 
-#docker build --tag=yugioh-admin:latest . <- dont forget the dot
-#docker run --name yugioh-admin  -p8081:8081 yugioh-admin:latest
+#docker build --tag=cards-gateway:latest . <- dont forget the dot
+#docker run --name cards-gateway -e "SPRING_PROFILES_ACTIVE=prod"  -p8083:8083 cards-gateway:latest
+#mvn -DLOCAL_IP=192.168.1.7 clean package

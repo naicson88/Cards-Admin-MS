@@ -5,8 +5,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
-
-import javax.persistence.EntityNotFoundException;
+import java.util.Optional;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -33,10 +32,8 @@ public class YuGiOhAPIDeckAndCardsImpl implements YuGiOhAPIDeckAndCards {
 
 		this.SET_NAME = setName;
 
-		String json = restTemplate.getCardsFromSetInYuGiOhAPI(setName);
-
-		if (json == null || json.isEmpty() || json.isBlank())
-			throw new NoSuchElementException("JSON with deck info was empty");
+		String json = Optional.of(restTemplate.getCardsFromSetInYuGiOhAPI(setName))
+				.orElseThrow(() -> new NoSuchElementException("JSON with deck info was empty"));
 
 		List<RelDeckCards> listRelDeckCards = this.convertJsonInListOfRelDeckCards(json);
 
@@ -49,7 +46,7 @@ public class YuGiOhAPIDeckAndCardsImpl implements YuGiOhAPIDeckAndCards {
 	private List<RelDeckCards> convertJsonInListOfRelDeckCards(String json) {
 
 		if (json == null || json.isEmpty() || json.isBlank())
-			throw new NoSuchElementException("JSON with deck info was empty");
+			throw new IllegalArgumentException("JSON with deck info was empty");
 
 		JSONObject object = new JSONObject(json);
 		JSONArray jsonArray = object.getJSONArray("data");
