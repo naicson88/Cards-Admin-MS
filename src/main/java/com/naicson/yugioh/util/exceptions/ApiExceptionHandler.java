@@ -31,8 +31,8 @@ public class ApiExceptionHandler {
 		   List<FieldError> fieldErrors = em.getBindingResult().getFieldErrors(); 
 	       String errorMessage = fieldErrors.get(0).getDefaultMessage();
 	       ApiExceptions ex = new ApiExceptions(errorMessage,HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST, this.time);
-		   logger.error("ConstraintViolationException: " + errorMessage);			
-		   return new ResponseEntity<Object>(ex, HttpStatus.BAD_REQUEST );
+		   logger.error("ConstraintViolationException: {}", errorMessage);			
+		   return new ResponseEntity<>(ex, HttpStatus.BAD_REQUEST );
 		}
 			
 		@ExceptionHandler(value = {Exception.class})
@@ -51,14 +51,14 @@ public class ApiExceptionHandler {
 		
 		@ExceptionHandler(value = {NoSuchElementException.class})
 		public ResponseEntity<Object> handleNotFoundlErros(NoSuchElementException e){	
-			ApiExceptions ex = new ApiExceptions(e.getMessage(),HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, ZonedDateTime.now(ZoneId.of("America/Sao_Paulo")));	
+			ApiExceptions ex = new ApiExceptions(e.getMessage(),HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, this.time);	
 			logger.error(e.getMessage());
 			return new ResponseEntity<>(ex, HttpStatus.NOT_FOUND);
 		}
 		
 		@ExceptionHandler(value = {EntityNotFoundException.class})
 		public ResponseEntity<Object> handleEntityNotFoundlErros(EntityNotFoundException e){			
-			ApiExceptions ex = new ApiExceptions(e.getMessage(), HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND, ZonedDateTime.now(ZoneId.of("America/Sao_Paulo")));	
+			ApiExceptions ex = new ApiExceptions(e.getMessage(), HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND,this.time);	
 			logger.error(e.getMessage());
 			return new ResponseEntity<>(ex, HttpStatus.NOT_FOUND);
 		}
@@ -66,7 +66,7 @@ public class ApiExceptionHandler {
 		@ExceptionHandler(value = {SQLException.class})
 		public ResponseEntity<Object> handleSQLException(SQLException sql){
 			ApiExceptions ex = new ApiExceptions(sql.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value(),  HttpStatus.INTERNAL_SERVER_ERROR, this.time);
-			logger.error("SQLException: " + ex.getMsg());
+			logger.error("SQLException: {}" , ex.getMsg());
 			
 			return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -76,7 +76,7 @@ public class ApiExceptionHandler {
 			ApiExceptions ex = new ApiExceptions(em.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value(),HttpStatus.INTERNAL_SERVER_ERROR, this.time);
 			logger.error("ErrorMessage: " + em.getMessage());
 			
-			return new ResponseEntity<Object>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 
