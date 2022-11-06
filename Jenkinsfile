@@ -62,7 +62,7 @@ pipeline {
 
           echo "Docker Image Tag Name: ${dockerImageTag}"
 
-          def inspectExitCode = sh script: "docker service inspect cards_admin", returnStatus: true
+          def inspectExitCode = sh script: "docker service inspect sonarqube", returnStatus: true
 		  echo "${inspectExitCode}"
           if (inspectExitCode > 0) {
           	echo "Removing Container..."
