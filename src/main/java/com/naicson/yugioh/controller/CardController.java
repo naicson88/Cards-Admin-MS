@@ -41,9 +41,7 @@ public class CardController {
 	
 	@PostMapping("/consult-cards")
 	public ResponseEntity<Long[]> consultNotRegisteredCards(@RequestBody List<Long> cardsNumbers,  @RequestHeader("Authorization") String token){
-		ResponseEntity<Long[]> entity = cardRestTemplate.findCardsNotRegistered(cardsNumbers, token);
-		
-		return entity;
+		return cardRestTemplate.findCardsNotRegistered(cardsNumbers, token);
 	}
 	
 	@PostMapping("cards-not-registered")
@@ -51,7 +49,7 @@ public class CardController {
 		
 		List<CardYuGiOhAPI> list = this.cardServiceDetail.getCardsToBeRegistered(cardsNumbers);
 		
-		return new ResponseEntity<List<CardYuGiOhAPI>>(list, HttpStatus.OK);
+		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 	
 	@PostMapping("/add-new-card-to-deck")
@@ -60,7 +58,7 @@ public class CardController {
 		
 		this.rabbitService.sendMessageAsJson(RabbitMQConstantes.CARD_QUEUE, cardAdded);
 		
-		return new ResponseEntity<AddNewCardToDeckDTO>(cardAdded, HttpStatus.CREATED);
+		return new ResponseEntity<>(cardAdded, HttpStatus.CREATED);
 		
 	}
 }

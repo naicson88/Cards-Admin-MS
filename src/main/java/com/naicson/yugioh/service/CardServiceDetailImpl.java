@@ -15,6 +15,7 @@ import com.naicson.yugioh.entity.RelDeckCards;
 import com.naicson.yugioh.resttemplates.CardRestTemplate;
 import com.naicson.yugioh.service.interfaces.CardServiceDetail;
 import com.naicson.yugioh.service.yugiohAPI.YuGiOhAPICardsImpl;
+import com.naicson.yugioh.util.exceptions.ErrorMessage;
 
 
 @Service
@@ -40,7 +41,7 @@ public class CardServiceDetailImpl implements CardServiceDetail {
 			cardsNotRegistered = cardRestTemplate.findCardsNotRegistered(cardNumbersOfDeck, token);
 
 			if (cardsNotRegistered == null || !cardsNotRegistered.getStatusCode().is2xxSuccessful())
-				throw new RuntimeException("It was not possible verify Card Not Registered");
+				throw new ErrorMessage("It was not possible verify Card Not Registered");
 
 		return cardsNotRegistered.getBody();
 
