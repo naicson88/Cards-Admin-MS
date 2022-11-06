@@ -2,11 +2,6 @@ FROM adoptopenjdk/openjdk11:alpine
 COPY target/*.jar cards-admin.jar
 RUN echo "America/Fortaleza" > /etc/timezone
 
-#Permite a comunicação com o container
-USER root
-CMD ["usermod -a -G root jenkins", "chmod 777 /var/run/docker.sock"]
-
-#ENTRYPOINT ["java", "-jar","/cards-gateway.jar"]
 ENTRYPOINT ["java", "-DLOCAL_IP=192.168.1.8", "-jar","/cards-admin.jar"]
 
 #docker build --tag=cards-gateway:latest . <- dont forget the dot
