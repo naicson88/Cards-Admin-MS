@@ -32,8 +32,6 @@ public class CardServiceDetailImpl implements CardServiceDetail {
 	public Long[] verifyCardsNotRegistered(List<RelDeckCards> listRelDeckCards, String token) {
 
 		ResponseEntity<Long[]> cardsNotRegistered = null;
-		
-		try {
 
 			this.validVerifyCardsNotRegisteredMethod(listRelDeckCards, token);
 
@@ -41,16 +39,8 @@ public class CardServiceDetailImpl implements CardServiceDetail {
 
 			cardsNotRegistered = cardRestTemplate.findCardsNotRegistered(cardNumbersOfDeck, token);
 
-			if (cardsNotRegistered == null || !cardsNotRegistered.getStatusCode().is2xxSuccessful()) {
-				logger.error("It was not possible verify Card Not Registered. HttpStatus: {} ",
-						cardsNotRegistered.getStatusCode());
-				throw new Exception("It was not possible verify Card Not Registered. HttpStatus:"
-						+ cardsNotRegistered.getStatusCode());
-			}
-
-		} catch (Exception e) {
-			logger.error("It was not possible verify Cards Not Registered");
-		}
+			if (cardsNotRegistered == null || !cardsNotRegistered.getStatusCode().is2xxSuccessful())
+				throw new RuntimeException("It was not possible verify Card Not Registered");
 
 		return cardsNotRegistered.getBody();
 

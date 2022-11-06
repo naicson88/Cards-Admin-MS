@@ -15,14 +15,11 @@ public class YuGiOhAPIDeckAndCardsRestTemplate {
 	public String getCardsFromSetInYuGiOhAPI(String setName) {
 		RestTemplate restTemplate = new RestTemplate();
 		
-		setName.trim();
-		setName.replaceAll("\\s", "%20");
-		
 		UriComponents uri = UriComponentsBuilder.newInstance()
 				.scheme(this.schem)
 				.host(this.host)	
 				.path("api/v7/cardinfo.php")
-				.queryParam("cardset", setName)
+				.queryParam("cardset", setName.trim().replaceAll("\\s", "%20"))
 				.build();
 		System.out.println(uri.toString());
 
