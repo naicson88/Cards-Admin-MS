@@ -64,7 +64,7 @@ pipeline {
 
           def inspectExitCode = sh script: "docker service inspect cards_admin", returnStatus: true
 		  echo "${inspectExitCode}"
-          if (inspectExitCode < 1) {
+          if (inspectExitCode == 1) {
           	echo "Removing Container..."
             sh "docker stop cards_admin"
             sh "docker rm cards_admin"
