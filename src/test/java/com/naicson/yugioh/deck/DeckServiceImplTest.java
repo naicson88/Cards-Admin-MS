@@ -32,7 +32,7 @@ import com.naicson.yugioh.service.yugiohAPI.YuGiOhAPIDeckAndCardsImpl;
 
 @ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
- class DeckServiceImplTest {
+public class DeckServiceImplTest {
 	
 	@Spy
 	@InjectMocks

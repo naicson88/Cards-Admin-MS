@@ -28,7 +28,7 @@ import com.naicson.yugioh.service.CardServiceImpl;
 
 @ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
- class CardServiceImplTest {
+public class CardServiceImplTest {
 	
 	@Spy
 	@InjectMocks

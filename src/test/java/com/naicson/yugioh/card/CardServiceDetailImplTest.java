@@ -25,7 +25,7 @@ import com.naicson.yugioh.service.yugiohAPI.YuGiOhAPICardsImpl;
 
 @ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class) // Usado com Junit5 ao inves do RunWith
- class CardServiceDetailImplTest {
+public class CardServiceDetailImplTest {
 	
 	@Mock
 	YuGiOhAPICardsImpl apiCards;
