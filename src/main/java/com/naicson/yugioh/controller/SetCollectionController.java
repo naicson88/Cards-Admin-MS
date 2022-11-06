@@ -43,6 +43,6 @@ public class SetCollectionController {
 		
 		logger.info("Message sent successfully to SETCOLLECTION Queue");
 		
-		return new ResponseEntity<SetCollectionDto>(collection, HttpStatus.OK);
+		return new ResponseEntity<>(collection, HttpStatus.OK);
 	}
 }

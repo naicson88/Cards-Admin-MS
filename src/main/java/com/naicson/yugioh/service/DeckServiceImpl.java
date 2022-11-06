@@ -32,7 +32,7 @@ public class DeckServiceImpl implements DeckService {
 		
 		List<RelDeckCards> listRelDeckCards = apiService.consultCardsOfADeckInYuGiOhAPI(konamiDeck.getRequestSource());
 		
-		if(listRelDeckCards == null || listRelDeckCards.size() == 0)	
+		if(listRelDeckCards == null || listRelDeckCards.isEmpty())	
 			throw new IllegalArgumentException("Informed Relation Deck x Cards is invalid!");
 				
 		//It necessary to check if all cards are already registered in cards' table
@@ -69,7 +69,7 @@ public class DeckServiceImpl implements DeckService {
 	
 	private List<Long> checkCardsNotRegistered(List<RelDeckCards> listRelDeckCards, String token) {
 		
-		Long[] cardsNotRegistered = cardService.verifyCardsNotRegistered(listRelDeckCards, token);
+		 Long[] cardsNotRegistered = cardService.verifyCardsNotRegistered(listRelDeckCards, token);
 		List<Long> listCardsNotRegistered =  Arrays.asList(cardsNotRegistered)
 				.stream().distinct().collect(Collectors.toList());
 		

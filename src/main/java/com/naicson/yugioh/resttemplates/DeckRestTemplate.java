@@ -14,10 +14,8 @@ import com.naicson.yugioh.dto.KonamiDeck;
 @Service
 public class DeckRestTemplate {
 	
-	private final String schem = "http";
-	private final String host = "localhost:8080";
-	
-
+	private static final String SCHEM = "http";
+	private static final String HOST = "localhost:8080";
 	
 	public ResponseEntity<KonamiDeck> getKonamiDeck(Long deckId, String source, String token) {
 		RestTemplate restTemplate = new RestTemplate();
@@ -25,23 +23,16 @@ public class DeckRestTemplate {
 		header.set("Authorization", token);
 		
 		UriComponents uri = UriComponentsBuilder.newInstance()
-				.scheme(this.schem)
-				.host(this.host)	
+				.scheme(SCHEM)
+				.host(HOST)	
 				.path("yugiohAPI/decks")
 				.queryParam("id", deckId)
 				.queryParam("source", source)
 				.build();
 		
-		 ResponseEntity<KonamiDeck> entity = restTemplate.exchange(uri.toUriString(), HttpMethod.GET, 
+		 return restTemplate.exchange(uri.toUriString(), HttpMethod.GET,
 				 new HttpEntity<Object>(header), KonamiDeck.class);
-		
-		 
-		 
-		 /*ResponseEntity<YourResponseObj> entity = new TestRestTemplate().exchange(
-                "http://localhost:" + port + "/youruri", HttpMethod.GET, new HttpEntity<Object>(headers),
-                YourResponseObj.class);*/
-		  
-		  return entity;
+
 	}
 
 }

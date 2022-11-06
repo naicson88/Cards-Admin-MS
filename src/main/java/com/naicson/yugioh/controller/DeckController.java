@@ -49,7 +49,7 @@ public class DeckController {
 		
 		this.rabbitService.sendMessageAsJson("DECK", createdKonamiDeck);
 		
-		return new ResponseEntity<KonamiDeck>(createdKonamiDeck, HttpStatus.OK);
+		return new ResponseEntity<>(createdKonamiDeck, HttpStatus.OK);
 	}
 	
 	@PostMapping("/new-deck-collection")
@@ -58,14 +58,12 @@ public class DeckController {
 		logger.info("DTO: {} ", createCollectionDeck);
 		this.rabbitService.sendMessageAsJson(RabbitMQConstantes.DECK_COLLECTION_QUEUE, createCollectionDeck);
 		
-		return new ResponseEntity<CollectionDeck>(createCollectionDeck, HttpStatus.OK);
+		return new ResponseEntity<>(createCollectionDeck, HttpStatus.OK);
 	}
 	
 	@GetMapping("/api")
 	public List<RelDeckCards> consultingAPI(@RequestParam("setName") String setName){
-		List<RelDeckCards> retorno = apiService.consultCardsOfADeckInYuGiOhAPI(setName);
-		
-		return retorno;
+		return apiService.consultCardsOfADeckInYuGiOhAPI(setName);		
 	}
 	
 }

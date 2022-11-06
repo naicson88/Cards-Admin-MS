@@ -14,8 +14,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Service
 public class CardRestTemplate {
 	
-	private final String schem = "http";
-	private final String host = "localhost:8080";
+	private static final String SCHEM = "http";
+	private static final String HOST = "localhost:8080";
 	
 	public ResponseEntity<Long[]> findCardsNotRegistered(List<Long> cardsOfDeck, String token){
 		
@@ -27,14 +27,12 @@ public class CardRestTemplate {
 		HttpEntity<List<Long>> entity = new HttpEntity<>(cardsOfDeck, header);
 		
 		UriComponents uri = UriComponentsBuilder.newInstance()
-				.scheme(this.schem)
-				.host(this.host)	
+				.scheme(SCHEM)
+				.host(HOST)	
 				.path("yugiohAPI/cards/search-cards-not-registered")
 				.queryParam("cardNumbers", cardsOfDeck)
 				.build();
 	
-		ResponseEntity<Long[]> response = restTemplate.postForEntity(uri.toString(), entity, Long[].class);
-	  
-	  return response;
+		return restTemplate.postForEntity(uri.toString(), entity, Long[].class);
 	}
 }

@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyLong;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +25,7 @@ import com.naicson.yugioh.service.yugiohAPI.YuGiOhAPICardsImpl;
 
 @ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class) // Usado com Junit5 ao inves do RunWith
-public class CardServiceDetailImplTest {
+ class CardServiceDetailImplTest {
 	
 	@Mock
 	YuGiOhAPICardsImpl apiCards;
@@ -36,7 +35,7 @@ public class CardServiceDetailImplTest {
 	CardServiceDetailImpl cardService;
 	
 	@BeforeEach
-	public void setup(){
+	private void setup(){
 	    MockitoAnnotations.openMocks(this); 
 	}
 	
@@ -50,7 +49,7 @@ public class CardServiceDetailImplTest {
 		
 		assertNotNull(cardsToBeRegistered);
 		assertEquals(cardsToBeRegistered.size(), cardsNotRegistered.size());
-		assertTrue(cardsToBeRegistered.get(0).getAtk().equals(1500));
+		assertEquals(1500, cardsToBeRegistered.get(0).getAtk());
 		
 	}
 }

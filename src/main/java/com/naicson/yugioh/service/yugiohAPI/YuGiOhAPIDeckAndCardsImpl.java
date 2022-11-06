@@ -35,17 +35,13 @@ public class YuGiOhAPIDeckAndCardsImpl implements YuGiOhAPIDeckAndCards {
 		String json = Optional.of(restTemplate.getCardsFromSetInYuGiOhAPI(setName))
 				.orElseThrow(() -> new NoSuchElementException("JSON with deck info was empty"));
 
-		List<RelDeckCards> listRelDeckCards = this.convertJsonInListOfRelDeckCards(json);
-
-		if (listRelDeckCards == null || listRelDeckCards.isEmpty())
-			throw new NoSuchElementException("Cards of this Set were not found");
-
-		return listRelDeckCards;
+		return  Optional.of(this.convertJsonInListOfRelDeckCards(json))
+				.orElseThrow(() -> new NoSuchElementException("Cards of this Set were not found"));
 	}
 
 	private List<RelDeckCards> convertJsonInListOfRelDeckCards(String json) {
 
-		if (json == null || json.isEmpty() || json.isBlank())
+		if (json == null || json.isBlank())
 			throw new IllegalArgumentException("JSON with deck info was empty");
 
 		JSONObject object = new JSONObject(json);
@@ -59,11 +55,9 @@ public class YuGiOhAPIDeckAndCardsImpl implements YuGiOhAPIDeckAndCards {
 
 			List<RelDeckCards> relation = this.returnARelDeckCardFromAJSONObject(card);
 
-			if (relation != null && relation.size() > 0)
-				relation.stream().forEach(rel -> {
-					listRelation.add(rel);
-				});
-		}
+			if (!relation.isEmpty())
+				relation.stream().forEach(rel -> listRelation.add(rel));
+		 }
 
 		return listRelation;
 	}

@@ -32,7 +32,7 @@ import com.naicson.yugioh.service.yugiohAPI.YuGiOhAPIDeckAndCardsImpl;
 
 @ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
-public class DeckServiceImplTest {
+ class DeckServiceImplTest {
 	
 	@Spy
 	@InjectMocks
@@ -47,7 +47,7 @@ public class DeckServiceImplTest {
 	Long[] arr = {};
 	
 	@BeforeEach
-	public  void setup(){
+	private  void setup(){
 	    MockitoAnnotations.openMocks(this); 
 	    listRel = List.of(RelDeckCardsMock.relDeckCards(), RelDeckCardsMock.relDeckCards());	    
 	}
@@ -63,7 +63,7 @@ public class DeckServiceImplTest {
 		KonamiDeck deck = deckService.createNewKonamiDeckWithCards(kDeck, TOKEN);
 		
 		assertNotNull(deck);
-		assertTrue(deck.getRelDeckCards().size() == listRel.size());
+		assertEquals(listRel.size(), deck.getRelDeckCards().size());
 		assertTrue(deck.getRelDeckCards().get(0).getIsSpeedDuel());
 		assertNull(deck.getCardsToBeRegistered());
 		
@@ -80,7 +80,7 @@ public class DeckServiceImplTest {
 		CollectionDeck deck = deckService.createNewCollectionDeck(cDeck, TOKEN);
 		
 		assertNotNull(deck);
-		assertTrue(deck.getRelDeckCards().size() == listRel.size());
+		assertEquals(listRel.size(), deck.getRelDeckCards().size());
 		assertTrue(deck.getRelDeckCards().get(0).getIsSpeedDuel());
 		assertNull(deck.getCardsToBeRegistered());	
 		
@@ -101,7 +101,7 @@ public class DeckServiceImplTest {
 		
 		assertNotNull(deck);
 		assertEquals(2, deck.getRelDeckCards().size());
-		assertTrue(deck.getRelDeckCards().get(0).getCardSetCode().equals("ABCD"));
+		assertEquals("ABCD", deck.getRelDeckCards().get(0).getCardSetCode());
 		assertEquals(0, deck.getRelDeckCards()
 				.stream().filter(rel -> rel.getCardSetCode().equals("123456")).count());
 		

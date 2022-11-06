@@ -4,8 +4,8 @@ import java.util.List;
 
 public class KonamiDeckWithDTO {
 	
-	public KonamiDeck konamiDeck;
-	public List<String> cardSetCodes;
+	private KonamiDeck konamiDeck;
+	private List<String> cardSetCodes;
 	
 	public KonamiDeck getKonamiDeck() {
 		return konamiDeck;

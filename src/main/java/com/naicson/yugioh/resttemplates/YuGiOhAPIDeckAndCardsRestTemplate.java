@@ -9,23 +9,20 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Service
 public class YuGiOhAPIDeckAndCardsRestTemplate {
 	
-	private final String schem = "https";
-	private final String host = "db.ygoprodeck.com";
+	private static final String SCHEM = "https";
+	private static final String HOST = "db.ygoprodeck.com";
 	
 	public String getCardsFromSetInYuGiOhAPI(String setName) {
 		RestTemplate restTemplate = new RestTemplate();
 		
 		UriComponents uri = UriComponentsBuilder.newInstance()
-				.scheme(this.schem)
-				.host(this.host)	
+				.scheme(SCHEM)
+				.host(HOST)	
 				.path("api/v7/cardinfo.php")
 				.queryParam("cardset", setName.trim().replaceAll("\\s", "%20"))
 				.build();
-		System.out.println(uri.toString());
 
-		String result = restTemplate.getForObject(uri.toString(), String.class);
-		
-		return result;
+		return restTemplate.getForObject(uri.toString(), String.class);
 		  	
 	}
 }

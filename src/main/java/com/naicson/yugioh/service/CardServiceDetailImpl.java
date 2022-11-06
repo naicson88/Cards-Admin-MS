@@ -61,10 +61,8 @@ public class CardServiceDetailImpl implements CardServiceDetail {
 		List<Long> cardNumbers = listRelDeckCards.stream().filter(rel -> rel.getCardNumber() != null)
 				.map(RelDeckCards::getCardNumber).collect(Collectors.toList());
 
-		if (cardNumbers != null && cardNumbers.size() == 0) {
-			logger.error("It was not possible get Card Numbers");
+		if (cardNumbers == null || cardNumbers.isEmpty())
 			throw new IllegalArgumentException("It was not possible get Card Numbers");
-		}
 
 		return cardNumbers;
 
@@ -74,7 +72,7 @@ public class CardServiceDetailImpl implements CardServiceDetail {
 	@Override
 	public List<CardYuGiOhAPI> getCardsToBeRegistered(List<Long> cardsNotRegistered) {
 		
-		if(cardsNotRegistered == null || cardsNotRegistered.size() == 0)
+		if(cardsNotRegistered == null || cardsNotRegistered.isEmpty())
 			throw new IllegalArgumentException("Invalid Cards Not Registered");
 				
 		List<CardYuGiOhAPI> cardsToBeRegistered = new LinkedList<>();

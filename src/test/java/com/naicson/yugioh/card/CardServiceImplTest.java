@@ -21,7 +21,6 @@ import org.springframework.test.context.ActiveProfiles;
 
 import com.naicson.yugioh.dto.AddNewCardToDeckDTO;
 import com.naicson.yugioh.dto.CardYuGiOhAPI;
-import com.naicson.yugioh.entity.RelDeckCards;
 import com.naicson.yugioh.mocks.AddNewCardToDeckDTOMock;
 import com.naicson.yugioh.mocks.CardYuGiOhAPIMock;
 import com.naicson.yugioh.service.CardServiceDetailImpl;
@@ -29,7 +28,7 @@ import com.naicson.yugioh.service.CardServiceImpl;
 
 @ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
-public class CardServiceImplTest {
+ class CardServiceImplTest {
 	
 	@Spy
 	@InjectMocks
@@ -39,7 +38,7 @@ public class CardServiceImplTest {
 	CardServiceDetailImpl cardServiceImpl;
 	
 	@BeforeEach
-	public void setup(){
+	private void setup(){
 	    MockitoAnnotations.openMocks(this); 
 	}
 	
@@ -58,7 +57,7 @@ public class CardServiceImplTest {
 		//Then
 		assertNotNull(card);
 		assertEquals(card.getCardsToBeRegistered().size(), list.size());
-		assertTrue(card.getCardsToBeRegistered().get(0).getAtk().equals(1500));
+		assertEquals(1500, card.getCardsToBeRegistered().get(0).getAtk());
 		
 		
 	}

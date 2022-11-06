@@ -27,8 +27,6 @@ public class AddNewCardToDeckDTO {
 	private double price;
 	private List<CardYuGiOhAPI> cardsToBeRegistered;
 	
-	public AddNewCardToDeckDTO() {}	
-	
 	public String getName() {
 		return name;
 	}

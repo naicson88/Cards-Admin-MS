@@ -11,7 +11,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.naicson.yugioh.dto.CardYuGiOhAPI;
 import com.naicson.yugioh.resttemplates.YuGiOhAPICardsRestTemplate;
-import com.naicson.yugioh.service.DeckServiceImpl;
 import com.naicson.yugioh.service.interfaces.YuGiOhAPICards;
 import com.naicson.yugioh.util.exceptions.ErrorMessage;
 
@@ -21,25 +20,21 @@ public class YuGiOhAPICardsImpl implements YuGiOhAPICards {
 	@Autowired
 	YuGiOhAPICardsRestTemplate apiCards;
 	
-	Logger logger = LoggerFactory.getLogger(DeckServiceImpl.class);
+	Logger logger = LoggerFactory.getLogger(YuGiOhAPICardsImpl.class);
 	
 	@Override
 	public CardYuGiOhAPI consultCardOnYuGiOhAPI(Long cardNumber) {
 		
 		String json = apiCards.getCardFromYuGiOhAPI(cardNumber);
 		
-		CardYuGiOhAPI card = this.transformJsonInCard(json);
-		
-		return card;
+		return this.transformJsonInCard(json);
 	}
 	
 	
 	private CardYuGiOhAPI transformJsonInCard(String json) {
 		
-		if(json == null || json.isEmpty()) {
-			logger.error("Invalid Json informed to transform in Card");
-			throw new IllegalArgumentException("Invalid Json informed to transform in Card");
-		}
+		if(json == null || json.isBlank())
+			throw new IllegalArgumentException("Invalid Json informed to transform in Card");	
 		
 		ObjectMapper mapper = new ObjectMapper();
 		
