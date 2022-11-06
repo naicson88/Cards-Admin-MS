@@ -28,7 +28,7 @@ pipeline {
       // Run the sonar scan 'local-sonar' is defined as variable in jenkins config
       steps {
         withSonarQubeEnv(installationName: 'local-sonar') {
-          sh "'${mvnHome}/bin/mvn'  verify sonar:sonar"
+          sh "'${mvnHome}/bin/mvn' sonar:sonar -Pcoverage"
         }
       }
     }
