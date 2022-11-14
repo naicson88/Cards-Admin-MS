@@ -33,10 +33,10 @@ public class KonamiDeck implements Serializable {
 	@NotBlank(message = "SetType cannot be empty")
 	private String setType;
 	@NotNull(message = "isSpeedDuel cannot be empty")
-	private Boolean isSpeedDuel;
+	private boolean isSpeedDuel;
 	@NotNull(message = "isBasedDeck cannot be empty")
 	@JsonAlias("isBasedDeck")
-	private Boolean isBasedDeck;
+	private boolean isBasedDeck;
 	@NotBlank(message = "SetCode cannot be empty")
 	private String setCode;
 	private List<CardYuGiOhAPI> cardsToBeRegistered;
@@ -98,16 +98,16 @@ public class KonamiDeck implements Serializable {
 	public void setRequestSource(String requestSource) {
 		this.requestSource = requestSource;
 	}
-	public Boolean getIsSpeedDuel() {
+	public boolean getIsSpeedDuel() {
 		return isSpeedDuel;
 	}
-	public void setIsSpeedDuel(Boolean isSpeedDuel) {
+	public void setIsSpeedDuel(boolean isSpeedDuel) {
 		this.isSpeedDuel = isSpeedDuel;
 	}
-	public Boolean getIsBasedDeck() {
+	public boolean getIsBasedDeck() {
 		return isBasedDeck;
 	}
-	public void setIsBasedDeck(Boolean isBasedDeck) {
+	public void setIsBasedDeck(boolean isBasedDeck) {
 		this.isBasedDeck = isBasedDeck;
 	}
 	public String getSetCode() {

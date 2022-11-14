@@ -55,7 +55,7 @@ public class DeckController {
 	@PostMapping("/new-deck-collection")
 	public ResponseEntity<CollectionDeck> registerCollectionDeck(@RequestBody CollectionDeck cDeck, @RequestHeader("Authorization") String token){
 		CollectionDeck createCollectionDeck = deckService.createNewCollectionDeck(cDeck, token);
-		logger.info("DTO: {} ", createCollectionDeck);
+	
 		this.rabbitService.sendMessageAsJson(RabbitMQConstantes.DECK_COLLECTION_QUEUE, createCollectionDeck);
 		
 		return new ResponseEntity<>(createCollectionDeck, HttpStatus.OK);

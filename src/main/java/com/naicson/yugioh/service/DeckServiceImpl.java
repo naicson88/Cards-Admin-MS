@@ -60,8 +60,6 @@ public class DeckServiceImpl implements DeckService {
 			cDeck.setCardsToBeRegistered(cardService.getCardsToBeRegistered(listCardsNotRegistered));	
 		
 		cDeck.setRelDeckCards(listRelDeckCards);
-		
-		cDeck.getRelDeckCards().forEach(rel -> rel.setIsSpeedDuel(cDeck.getIsSpeedDuel()));
 			
 		return cDeck;
 					

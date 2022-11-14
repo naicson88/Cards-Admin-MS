@@ -13,8 +13,8 @@ public class RelDeckCards implements Serializable {
 	private Double card_price;
 	private String card_raridade;
 	private Date dt_criacao;
-	private Boolean isSideDeck;
-	private Boolean isSpeedDuel;
+	private boolean isSideDeck;
+	private boolean isSpeedDuel;
 	private String setRarityCode;
 	private String rarityDetails;
 	
@@ -49,10 +49,10 @@ public class RelDeckCards implements Serializable {
 	public void setDt_criacao(Date dt_criacao) {
 		this.dt_criacao = dt_criacao;
 	}
-	public Boolean getIsSideDeck() {
+	public boolean getIsSideDeck() {
 		return isSideDeck;
 	}
-	public void setIsSideDeck(Boolean isSideDeck) {
+	public void setIsSideDeck(boolean isSideDeck) {
 		this.isSideDeck = isSideDeck;
 	}
 

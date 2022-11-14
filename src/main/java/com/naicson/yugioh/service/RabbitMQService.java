@@ -16,8 +16,7 @@ public class RabbitMQService {
 	
 	//Send message for RabbitMQ
 	public void sendMessageAsJson(String queueName, Object message) {	
-		ObjectMapper mapper = new ObjectMapper();
-		
+		ObjectMapper mapper = new ObjectMapper();	
 		try {
 			
 			String json = mapper.writeValueAsString(message);
