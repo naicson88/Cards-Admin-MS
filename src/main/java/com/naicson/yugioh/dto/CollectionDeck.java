@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class CollectionDeck extends KonamiDeck {
 	
 	private static final long serialVersionUID = 1L;
+
 	@JsonProperty("setId")
 	private Integer setId ;
 	@JsonProperty("filterSetCode")

@@ -51,6 +51,9 @@ public class DeckServiceImpl implements DeckService {
 	
 	public CollectionDeck createNewCollectionDeck(CollectionDeck cDeck, String token) {
 		
+		if(cDeck.getSetId() == null)
+			throw new IllegalArgumentException("Invalid Set Id");
+		
 		List<RelDeckCards> listRelDeckCards = getListRelDeckCardsForNewCollectionDeck(cDeck);
 		
 		//It necessary to check if all cards are already registered in cards' table

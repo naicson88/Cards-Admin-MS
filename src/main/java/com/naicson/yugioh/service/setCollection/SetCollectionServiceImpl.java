@@ -2,12 +2,18 @@ package com.naicson.yugioh.service.setCollection;
 
 import java.util.Calendar;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.naicson.yugioh.dto.AssociationDTO;
 import com.naicson.yugioh.dto.SetCollectionDto;
+import com.naicson.yugioh.resttemplates.SetCollectionRestTemplate;
 import com.naicson.yugioh.service.DeckServiceImpl;
 import com.naicson.yugioh.service.interfaces.SetCollectionService;
 
@@ -18,6 +24,9 @@ public class SetCollectionServiceImpl implements SetCollectionService{
 	
 	@Autowired
 	DeckServiceImpl deckService;
+	
+	@Autowired
+	SetCollectionRestTemplate setTemplate;
 
 	@Override
 	public SetCollectionDto createNewSetCollection(SetCollectionDto collection, String token) {
@@ -49,9 +58,20 @@ public class SetCollectionServiceImpl implements SetCollectionService{
 			throw new IllegalArgumentException("Invalid Set Type");
 		
 		if(collection.getIsSpeedDuel() == null)
-			throw new IllegalArgumentException("Set Collection Speed Duel is invalid");
+			throw new IllegalArgumentException("Set Collection Speed Duel is invalid");			
+	}
+
+	public AssociationDTO newAssociation(@Valid AssociationDTO dto, String token) {
 		
-			
+		if(token == null || token.isBlank())
+			throw new IllegalArgumentException("Invalid Token informed! " + token);
+		
+		ResponseEntity<String> respEntity = setTemplate.sendNewAssociation(dto, token);
+		
+		if( respEntity.getStatusCode() != HttpStatus.OK)
+			throw new RuntimeException("It was not possible register a new Association " + respEntity.getBody());
+		
+		return dto;	
 	}
 	
 

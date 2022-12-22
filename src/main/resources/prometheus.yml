@@ -10,3 +10,7 @@ scrape_configs:
          labels:
           application: "api-admin"
   
+  #logback_events_total no Prometheus - Monitorar logs
+  #logback_events_total{level="warn"} - No Grafa, exemplo com parametro
+  
+ 

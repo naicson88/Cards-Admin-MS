@@ -2,6 +2,7 @@ package com.naicson.yugioh.controller;
 
 import javax.validation.Valid;
 
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.naicson.yugioh.configs.RabbitMQConstantes;
+import com.naicson.yugioh.dto.AssociationDTO;
 import com.naicson.yugioh.dto.SetCollectionDto;
 import com.naicson.yugioh.service.RabbitMQService;
 import com.naicson.yugioh.service.setCollection.SetCollectionServiceImpl;
@@ -44,5 +46,16 @@ public class SetCollectionController {
 		logger.info("Message sent successfully to SETCOLLECTION Queue");
 		
 		return new ResponseEntity<>(collection, HttpStatus.OK);
+	}
+	
+	@PostMapping("/new-association")
+	public ResponseEntity<String> newAssociation(@Valid @RequestBody AssociationDTO dto, @RequestHeader("Authorization") String token){
+		logger.info("Starting creating new Association...");
+		
+		collectionService.newAssociation(dto, token);
+		
+		logger.info("Association sent successfully!");
+		
+		return new ResponseEntity<>(JSONObject.quote("Association sent successfully!"), HttpStatus.OK);
 	}
 }
