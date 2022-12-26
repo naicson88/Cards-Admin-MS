@@ -26,6 +26,7 @@ public class SetCollectionDto {
 	private Boolean isSpeedDuel;
 	@NotBlank(message = "SetCode cannot be empty")
 	private String setCode;
+	private String description;
 	
 	public String getName() {
 		return name;
@@ -76,6 +77,12 @@ public class SetCollectionDto {
 	}
 	public void setSetCode(String setCode) {
 		this.setCode = setCode;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
 	}
 		
 	

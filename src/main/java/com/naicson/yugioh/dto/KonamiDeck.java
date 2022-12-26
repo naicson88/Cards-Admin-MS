@@ -39,6 +39,8 @@ public class KonamiDeck implements Serializable {
 	private boolean isBasedDeck;
 	@NotBlank(message = "SetCode cannot be empty")
 	private String setCode;
+	private String description;
+	
 	private List<CardYuGiOhAPI> cardsToBeRegistered;
 	private List<RelDeckCards> relDeckCards;
 	
@@ -115,6 +117,12 @@ public class KonamiDeck implements Serializable {
 	}
 	public void setSetCode(String setCode) {
 		this.setCode = setCode;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 	
