@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.naicson.yugioh.dto.CollectionDeck;
+import com.naicson.yugioh.dto.DeckCollectionYuGiPediaDTO;
 import com.naicson.yugioh.dto.KonamiDeck;
 import com.naicson.yugioh.entity.RelDeckCards;
 import com.naicson.yugioh.service.interfaces.DeckService;
@@ -70,21 +71,19 @@ public class DeckServiceImpl implements DeckService {
 	
 	private List<Long> checkCardsNotRegistered(List<RelDeckCards> listRelDeckCards, String token) {
 		
-		 Long[] cardsNotRegistered = cardService.verifyCardsNotRegistered(listRelDeckCards, token);
-		List<Long> listCardsNotRegistered =  Arrays.asList(cardsNotRegistered)
-				.stream().distinct().collect(Collectors.toList());
+		Long[] cardsNotRegistered = cardService.verifyCardsNotRegistered(listRelDeckCards, token);
+		return Arrays.asList(cardsNotRegistered).stream().distinct().collect(Collectors.toList());
 		
-		return listCardsNotRegistered;
 	}
 
 	private List<RelDeckCards> getListRelDeckCardsForNewCollectionDeck(CollectionDeck cDeck) {
 		
 		List<RelDeckCards> listRelDeckCards;
-		if(cDeck.getFilterSetCode() != null && !cDeck.getFilterSetCode().isBlank()) {
+		if(cDeck.getFilterSetCode() != null && !cDeck.getFilterSetCode().isBlank()) 
 			listRelDeckCards = this.getFilteredCards(cDeck);
-		} else {
+		 else 
 			listRelDeckCards = apiService.consultCardsOfADeckInYuGiOhAPI(cDeck.getRequestSource());
-		}
+		
 		return listRelDeckCards;
 	}
 	
@@ -106,5 +105,15 @@ public class DeckServiceImpl implements DeckService {
 		
 		return listRelDeckCards;
 	}
-	
+
+
+	public CollectionDeck registerNewDeckCollectionYugipedia(CollectionDeck cDeck, String token) {
+		List<Long> listCardsNotRegistered = checkCardsNotRegistered(cDeck.getRelDeckCards(), token);
+		
+		if(listCardsNotRegistered != null && !listCardsNotRegistered.isEmpty())
+			cDeck.setCardsToBeRegistered(cardService.getCardsToBeRegistered(listCardsNotRegistered));	
+			
+		return cDeck;
+	}
+
 }

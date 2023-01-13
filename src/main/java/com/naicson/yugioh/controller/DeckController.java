@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.naicson.yugioh.configs.RabbitMQConstantes;
 import com.naicson.yugioh.dto.CollectionDeck;
+import com.naicson.yugioh.dto.DeckCollectionYuGiPediaDTO;
 import com.naicson.yugioh.dto.KonamiDeck;
 import com.naicson.yugioh.entity.RelDeckCards;
 import com.naicson.yugioh.service.DeckServiceImpl;
@@ -60,6 +61,16 @@ public class DeckController {
 		
 		return new ResponseEntity<>(createCollectionDeck, HttpStatus.OK);
 	}
+	
+	@PostMapping("/new-deck-collection-yugipedia")
+	public ResponseEntity<String> registerNewDeckCollectionYugipedia(@RequestBody CollectionDeck dto, @RequestHeader("Authorization") String token){
+		CollectionDeck newYugipediaDeck = deckService.registerNewDeckCollectionYugipedia(dto, token);
+		
+		this.rabbitService.sendMessageAsJson(RabbitMQConstantes.DECK_COLLECTION_QUEUE, newYugipediaDeck);
+	
+		return new ResponseEntity<>("Chegou!", HttpStatus.OK);
+	}
+	
 	
 	@GetMapping("/api")
 	public List<RelDeckCards> consultingAPI(@RequestParam("setName") String setName){
