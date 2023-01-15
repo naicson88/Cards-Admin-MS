@@ -2,6 +2,7 @@ package com.naicson.yugioh.service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -111,7 +112,9 @@ public class DeckServiceImpl implements DeckService {
 		List<Long> listCardsNotRegistered = checkCardsNotRegistered(cDeck.getRelDeckCards(), token);
 		
 		if(listCardsNotRegistered != null && !listCardsNotRegistered.isEmpty())
-			cDeck.setCardsToBeRegistered(cardService.getCardsToBeRegistered(listCardsNotRegistered));	
+			cDeck.setCardsToBeRegistered(cardService.getCardsToBeRegistered(listCardsNotRegistered));
+		
+		cDeck.getRelDeckCards().stream().forEach(rel -> rel.setDt_criacao(new Date()));
 			
 		return cDeck;
 	}

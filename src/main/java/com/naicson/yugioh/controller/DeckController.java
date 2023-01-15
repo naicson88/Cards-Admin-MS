@@ -77,4 +77,11 @@ public class DeckController {
 		return apiService.consultCardsOfADeckInYuGiOhAPI(setName);		
 	}
 	
+	@GetMapping("/async")
+	public ResponseEntity<String> testeAsync() throws InterruptedException{
+		apiService.testeAsync();	
+		
+		return new ResponseEntity<>("Resposta enviada!!", HttpStatus.OK);
+	}
+	
 }

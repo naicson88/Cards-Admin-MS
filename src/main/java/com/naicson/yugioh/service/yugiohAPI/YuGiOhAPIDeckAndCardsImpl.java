@@ -6,10 +6,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.naicson.yugioh.entity.RelDeckCards;
@@ -17,14 +19,13 @@ import com.naicson.yugioh.resttemplates.YuGiOhAPIDeckAndCardsRestTemplate;
 import com.naicson.yugioh.service.interfaces.YuGiOhAPIDeckAndCards;
 
 @Service
-public class YuGiOhAPIDeckAndCardsImpl implements YuGiOhAPIDeckAndCards {
+public class YuGiOhAPIDeckAndCardsImpl {
 
 	private String SET_NAME;
 
 	@Autowired
 	YuGiOhAPIDeckAndCardsRestTemplate restTemplate;
 
-	@Override
 	public List<RelDeckCards> consultCardsOfADeckInYuGiOhAPI(String setName) {
 
 		if (setName == null || setName.isBlank())
@@ -92,6 +93,15 @@ public class YuGiOhAPIDeckAndCardsImpl implements YuGiOhAPIDeckAndCards {
 		}
 
 		return listRelDeckCards;
+	}
+	
+	@Async
+	public void testeAsync() throws InterruptedException {
+		for( int i = 0; i < 10; i++ ) {
+			TimeUnit.SECONDS.sleep(1);
+			System.out.println(i);
+		}
+		
 	}
 
 }

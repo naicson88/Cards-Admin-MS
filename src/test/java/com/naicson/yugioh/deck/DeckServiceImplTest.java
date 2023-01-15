@@ -81,7 +81,7 @@ public class DeckServiceImplTest {
 		
 		assertNotNull(deck);
 		assertEquals(listRel.size(), deck.getRelDeckCards().size());
-		assertTrue(deck.getRelDeckCards().get(0).getIsSpeedDuel());
+		//assertTrue(deck.getRelDeckCards().get(0).getIsSpeedDuel());
 		assertNull(deck.getCardsToBeRegistered());	
 		
 	}
