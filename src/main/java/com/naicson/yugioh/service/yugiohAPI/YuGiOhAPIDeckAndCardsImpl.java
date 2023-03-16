@@ -15,6 +15,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.naicson.yugioh.entity.RelDeckCards;
+import com.naicson.yugioh.feing.YuGiOhAPI;
 import com.naicson.yugioh.resttemplates.YuGiOhAPIDeckAndCardsRestTemplate;
 import com.naicson.yugioh.service.interfaces.YuGiOhAPIDeckAndCards;
 
@@ -25,6 +26,9 @@ public class YuGiOhAPIDeckAndCardsImpl {
 
 	@Autowired
 	YuGiOhAPIDeckAndCardsRestTemplate restTemplate;
+	
+	@Autowired
+	YuGiOhAPI feing;
 
 	public List<RelDeckCards> consultCardsOfADeckInYuGiOhAPI(String setName) {
 
@@ -33,7 +37,7 @@ public class YuGiOhAPIDeckAndCardsImpl {
 
 		this.SET_NAME = setName;
 
-		String json = Optional.of(restTemplate.getCardsFromSetInYuGiOhAPI(setName))
+		String json = Optional.of(feing.getCardsFromSetInYuGiOhAPI(setName))
 				.orElseThrow(() -> new NoSuchElementException("JSON with deck info was empty"));
 
 		return  Optional.of(this.convertJsonInListOfRelDeckCards(json))

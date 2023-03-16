@@ -59,7 +59,9 @@ public class CardServiceDetailImpl implements CardServiceDetail {
 	public List<Long> getCardsNumberFromListRelDeckCards(List<RelDeckCards> listRelDeckCards) {
 
 		List<Long> cardNumbers = listRelDeckCards.stream().filter(rel -> rel.getCardNumber() != null)
-				.map(RelDeckCards::getCardNumber).collect(Collectors.toList());
+				.distinct()
+				.map(RelDeckCards::getCardNumber)
+				.collect(Collectors.toList());
 
 		if (cardNumbers == null || cardNumbers.isEmpty())
 			throw new IllegalArgumentException("It was not possible get Card Numbers");

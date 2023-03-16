@@ -28,7 +28,7 @@ public class YuGiOhAPIDeckAndCardsRestTemplate {
 				.build();
 		
 		System.out.println(uri.toString());
-		return restTemplate.getForObject(uri.toString(), String.class);
+		return restTemplate.getForObject(uri.toString().trim(), String.class);
 		  	
 	}
 }

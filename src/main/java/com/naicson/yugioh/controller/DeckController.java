@@ -1,6 +1,9 @@
 package com.naicson.yugioh.controller;
 
+import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -22,7 +25,9 @@ import com.naicson.yugioh.configs.RabbitMQConstantes;
 import com.naicson.yugioh.dto.CollectionDeck;
 import com.naicson.yugioh.dto.DeckCollectionYuGiPediaDTO;
 import com.naicson.yugioh.dto.KonamiDeck;
+import com.naicson.yugioh.entity.BasicData;
 import com.naicson.yugioh.entity.RelDeckCards;
+import com.naicson.yugioh.entity.UserData;
 import com.naicson.yugioh.service.DeckServiceImpl;
 import com.naicson.yugioh.service.RabbitMQService;
 import com.naicson.yugioh.service.yugiohAPI.YuGiOhAPIDeckAndCardsImpl;
@@ -77,11 +82,5 @@ public class DeckController {
 		return apiService.consultCardsOfADeckInYuGiOhAPI(setName);		
 	}
 	
-	@GetMapping("/async")
-	public ResponseEntity<String> testeAsync() throws InterruptedException{
-		apiService.testeAsync();	
-		
-		return new ResponseEntity<>("Resposta enviada!!", HttpStatus.OK);
-	}
 	
 }
