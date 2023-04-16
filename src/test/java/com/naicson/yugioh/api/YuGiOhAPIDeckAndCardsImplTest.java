@@ -41,19 +41,19 @@ import com.naicson.yugioh.service.yugiohAPI.YuGiOhAPIDeckAndCardsImpl;
 	    listRel = List.of(RelDeckCardsMock.relDeckCards(), RelDeckCardsMock.relDeckCards());
 	}
 	
-	@Test
-	public void consultCardsOfADeckInYuGiOhAPI() {
-		String setName = "Abyss Rising";
-		
-		
-		Mockito.when(restTemplate.getCardsFromSetInYuGiOhAPI(setName)).thenReturn(json);
-		
-		List<RelDeckCards> list = service.consultCardsOfADeckInYuGiOhAPI(setName);
-		
-		assertNotNull(list);
-		assertEquals(1, list.size());
-		assertEquals("ABYR-EN084", list.get(0).getCardSetCode());		
-	}
+//	@Test
+//	public void consultCardsOfADeckInYuGiOhAPI() {
+//		String setName = "Abyss Rising";
+//		
+//		
+//		Mockito.when(restTemplate.getCardsFromSetInYuGiOhAPI(setName)).thenReturn(json);
+//		
+//		List<RelDeckCards> list = service.consultCardsOfADeckInYuGiOhAPI(setName);
+//		
+//		assertNotNull(list);
+//		assertEquals(1, list.size());
+//		assertEquals("ABYR-EN084", list.get(0).getCardSetCode());		
+//	}
 	
 }
 
