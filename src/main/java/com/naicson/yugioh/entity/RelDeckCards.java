@@ -2,6 +2,7 @@ package com.naicson.yugioh.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 public class RelDeckCards implements Serializable {
 
@@ -99,6 +100,21 @@ public class RelDeckCards implements Serializable {
 		this.setRarityCode = setRarityCode;
 	}
 	
+	@Override
+	public int hashCode() {
+		return Objects.hash(cardSetCode, rarityDetails);
+	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RelDeckCards other = (RelDeckCards) obj;
+		return Objects.equals(cardSetCode, other.cardSetCode) && Objects.equals(rarityDetails, other.rarityDetails);
+	}
 	
 }

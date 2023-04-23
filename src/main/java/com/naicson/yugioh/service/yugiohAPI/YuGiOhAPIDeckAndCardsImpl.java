@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -68,35 +71,46 @@ public class YuGiOhAPIDeckAndCardsImpl {
 	}
 
 	private List<RelDeckCards> returnARelDeckCardFromAJSONObject(JSONObject card) {
-		List<RelDeckCards> listRelDeckCards = new ArrayList<>();
-		int counter = 0;
-		for (int i = 0; i < card.getJSONArray("card_sets").length(); i++) {
-
-			RelDeckCards relDeckCards = new RelDeckCards();
-
-			JSONObject relation = card.getJSONArray("card_sets").getJSONObject(i);
-			String setName = (String) relation.get("set_name");
-
-			if (setName.equalsIgnoreCase(this.SET_NAME)) {
-				counter++;
-
+		
+		List<RelDeckCards> listRelDeckCards = IntStream.range(0, card.getJSONArray("card_sets").length())
+			.mapToObj(i -> card.getJSONArray("card_sets").getJSONObject(i))
+			.filter(c -> c.get("set_name").equals(this.SET_NAME))
+			.filter(c -> ((String) c.get("set_code")).contains("EN"))
+			.map(relation -> {
+				RelDeckCards relDeckCards = new RelDeckCards();
 				relDeckCards.setCardNumber(Integer.toUnsignedLong((Integer) card.get("id")));
 				relDeckCards.setCard_price(Double.parseDouble((String) relation.get("set_price")));
 				relDeckCards.setCard_raridade((String) relation.get("set_rarity"));
 				relDeckCards.setSetRarityCode((String) relation.get("set_rarity_code"));
 				relDeckCards.setRarityDetails((String) relation.get("set_rarity"));
-				if (counter <= 1)
-					relDeckCards.setCardSetCode((String) relation.get("set_code"));
-				else 
-					relDeckCards.setCardSetCode((String) relation.get("set_code")+"("+ counter+")");
-	
+				relDeckCards.setCardSetCode((String) relation.get("set_code"));
 				relDeckCards.setDt_criacao(new Date());
 				relDeckCards.setIsSideDeck(false);
-				listRelDeckCards.add(relDeckCards);
-			}
+				
+				return relDeckCards;
+			}).distinct()
+			  .collect(Collectors.toList());
+		
+		return this.editSetCodeDuplicated(listRelDeckCards);
+	}
+	
+	private List<RelDeckCards> editSetCodeDuplicated(List<RelDeckCards> listRelDeckCards) {
+		
+		Map<String, Long> mapDuplicated = listRelDeckCards.stream()
+		.collect(Collectors.groupingBy(RelDeckCards::getCardSetCode, Collectors.counting()))
+		.entrySet()
+		.stream()
+		.filter(entry -> entry.getValue() > 1L)
+		.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+		
+		for(Map.Entry<String, Long> map : mapDuplicated.entrySet()) {
+			listRelDeckCards.stream().filter(r -> r.getCardSetCode().equals(map.getKey())).forEach(rel -> {
+				rel.setCardSetCode(rel.getCardSetCode()+rel.getSetRarityCode());
+			});
 		}
-
+		
 		return listRelDeckCards;
+		
 	}
 	
 	@Async
