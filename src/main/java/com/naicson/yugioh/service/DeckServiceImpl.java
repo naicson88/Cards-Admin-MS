@@ -73,6 +73,7 @@ public class DeckServiceImpl implements DeckService {
 	private List<Long> checkCardsNotRegistered(List<RelDeckCards> listRelDeckCards, String token) {
 		
 		Long[] cardsNotRegistered = cardService.verifyCardsNotRegistered(listRelDeckCards, token);
+			
 		return Arrays.asList(cardsNotRegistered).stream().distinct().collect(Collectors.toList());
 		
 	}
@@ -82,7 +83,7 @@ public class DeckServiceImpl implements DeckService {
 		List<RelDeckCards> listRelDeckCards;
 		if(cDeck.getFilterSetCode() != null && !cDeck.getFilterSetCode().isBlank()) 
 			listRelDeckCards = this.getFilteredCards(cDeck);
-		 else 
+		else 
 			listRelDeckCards = apiService.consultCardsOfADeckInYuGiOhAPI(cDeck.getRequestSource());
 		
 		return listRelDeckCards;

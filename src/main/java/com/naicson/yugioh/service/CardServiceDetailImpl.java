@@ -34,7 +34,7 @@ public class CardServiceDetailImpl implements CardServiceDetail {
 
 		ResponseEntity<Long[]> cardsNotRegistered = null;
 
-			this.validVerifyCardsNotRegisteredMethod(listRelDeckCards, token);
+			this.validVerifyCardsNotRegistered(listRelDeckCards, token);
 
 			List<Long> cardNumbersOfDeck = this.getCardsNumberFromListRelDeckCards(listRelDeckCards);
 
@@ -47,7 +47,7 @@ public class CardServiceDetailImpl implements CardServiceDetail {
 
 	}
 
-	private void validVerifyCardsNotRegisteredMethod(List<RelDeckCards> listRelDeckCards, String token) {
+	private void validVerifyCardsNotRegistered(List<RelDeckCards> listRelDeckCards, String token) {
 		if (listRelDeckCards == null || listRelDeckCards.isEmpty()) 
 			throw new IllegalArgumentException("Invalid KonamiDeck informed.");
 		

@@ -75,7 +75,10 @@ public class YuGiOhAPIDeckAndCardsImpl {
 		List<RelDeckCards> listRelDeckCards = IntStream.range(0, card.getJSONArray("card_sets").length())
 			.mapToObj(i -> card.getJSONArray("card_sets").getJSONObject(i))
 			.filter(c -> c.get("set_name").equals(this.SET_NAME))
-			.filter(c -> ((String) c.get("set_code")).contains("EN"))
+			.filter(c -> 
+					((String) c.get("set_code")).contains("EN") == true ? 
+					((String) c.get("set_code")).contains("EN") :
+					((String) c.get("set_code")) != null)
 			.map(relation -> {
 				RelDeckCards relDeckCards = new RelDeckCards();
 				relDeckCards.setCardNumber(Integer.toUnsignedLong((Integer) card.get("id")));
