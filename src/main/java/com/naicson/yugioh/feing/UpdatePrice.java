@@ -1,8 +1,15 @@
 package com.naicson.yugioh.feing;
 
-import org.springframework.cloud.openfeign.FeignClient;
+import java.util.Optional;
 
-@FeignClient(value = "YuGiOh-API", url = "http://yugiohprices.com/api")
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+@FeignClient(value = "Card-Price", url = "https://yugiohprices.com/api")
 public interface UpdatePrice {
+	
+	@GetMapping("/set_data/{deckName}")
+	Optional<String> getDeckPrice(@PathVariable String deckName); 
 	
 }

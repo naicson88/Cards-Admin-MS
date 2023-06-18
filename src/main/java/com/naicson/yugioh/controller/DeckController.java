@@ -47,7 +47,7 @@ public class DeckController {
 	public ResponseEntity<KonamiDeck> registerNewDeck(@Valid @RequestBody KonamiDeck kDeck, @RequestHeader("Authorization") String token){
 		KonamiDeck createdKonamiDeck = deckService.createNewKonamiDeckWithCards(kDeck, token);
 		
-		this.rabbitService.sendMessageAsJson("DECK", createdKonamiDeck);
+		this.rabbitService.sendMessageAsJson(RabbitMQConstantes.DECK_QUEUE, createdKonamiDeck);
 		
 		return new ResponseEntity<>(createdKonamiDeck, HttpStatus.OK);
 	}
