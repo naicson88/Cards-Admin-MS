@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import cardscommons.dto.RelDeckCardsDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.naicson.yugioh.configs.RabbitMQConstantes;
 import com.naicson.yugioh.dto.CollectionDeck;
-import com.naicson.yugioh.dto.KonamiDeck;
-import com.naicson.yugioh.entity.RelDeckCards;
+import cardscommons.dto.KonamiDeckDTO;
+
 import com.naicson.yugioh.service.DeckServiceImpl;
 import com.naicson.yugioh.service.RabbitMQService;
 import com.naicson.yugioh.service.yugiohAPI.YuGiOhAPIDeckAndCardsImpl;
@@ -44,8 +45,8 @@ public class DeckController {
 	
 	
 	@PostMapping("/new-deck")
-	public ResponseEntity<KonamiDeck> registerNewDeck(@Valid @RequestBody KonamiDeck kDeck, @RequestHeader("Authorization") String token){
-		KonamiDeck createdKonamiDeck = deckService.createNewKonamiDeckWithCards(kDeck, token);
+	public ResponseEntity<KonamiDeckDTO> registerNewDeck(@Valid @RequestBody KonamiDeckDTO kDeck, @RequestHeader("Authorization") String token){
+		KonamiDeckDTO createdKonamiDeck = deckService.createNewKonamiDeckWithCards(kDeck, token);
 		
 		this.rabbitService.sendMessageAsJson(RabbitMQConstantes.DECK_QUEUE, createdKonamiDeck);
 		
@@ -72,7 +73,7 @@ public class DeckController {
 	
 	
 	@GetMapping("/api")
-	public List<RelDeckCards> consultingAPI(@RequestParam("setName") String setName){
+	public List<RelDeckCardsDTO> consultingAPI(@RequestParam("setName") String setName){
 		return apiService.consultCardsOfADeckInYuGiOhAPI(setName);		
 	}
 	

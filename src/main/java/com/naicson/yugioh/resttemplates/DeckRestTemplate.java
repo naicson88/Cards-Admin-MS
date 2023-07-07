@@ -1,5 +1,6 @@
 package com.naicson.yugioh.resttemplates;
 
+import cardscommons.dto.KonamiDeckDTO;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -9,15 +10,13 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.naicson.yugioh.dto.KonamiDeck;
-
 @Service
 public class DeckRestTemplate {
 	
 	private static final String SCHEM = "http";
 	private static final String HOST = "localhost:8080";
 	
-	public ResponseEntity<KonamiDeck> getKonamiDeck(Long deckId, String source, String token) {
+	public ResponseEntity<KonamiDeckDTO> getKonamiDeck(Long deckId, String source, String token) {
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders header = new HttpHeaders();
 		header.set("Authorization", token);
@@ -31,7 +30,7 @@ public class DeckRestTemplate {
 				.build();
 		
 		 return restTemplate.exchange(uri.toUriString(), HttpMethod.GET,
-				 new HttpEntity<Object>(header), KonamiDeck.class);
+				 new HttpEntity<Object>(header), KonamiDeckDTO.class);
 
 	}
 

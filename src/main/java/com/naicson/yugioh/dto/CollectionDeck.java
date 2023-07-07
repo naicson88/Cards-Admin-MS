@@ -1,8 +1,9 @@
 package com.naicson.yugioh.dto;
 
+import cardscommons.dto.KonamiDeckDTO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class CollectionDeck extends KonamiDeck {
+public class CollectionDeck extends KonamiDeckDTO {
 	
 	private static final long serialVersionUID = 1L;
 

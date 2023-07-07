@@ -1,16 +1,18 @@
 package com.naicson.yugioh.dto;
 
+import cardscommons.dto.KonamiDeckDTO;
+
 import java.util.List;
 
 public class KonamiDeckWithDTO {
 	
-	private KonamiDeck konamiDeck;
+	private KonamiDeckDTO konamiDeck;
 	private List<String> cardSetCodes;
 	
-	public KonamiDeck getKonamiDeck() {
+	public KonamiDeckDTO getKonamiDeck() {
 		return konamiDeck;
 	}
-	public void setKonamiDeck(KonamiDeck konamiDeck) {
+	public void setKonamiDeck(KonamiDeckDTO konamiDeck) {
 		this.konamiDeck = konamiDeck;
 	}
 	public List<String> getCardSetCodes() {

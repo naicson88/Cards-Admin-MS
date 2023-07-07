@@ -1,26 +1,18 @@
 package com.naicson.yugioh.service.yugiohAPI;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
+import cardscommons.dto.RelDeckCardsDTO;
+import com.naicson.yugioh.feing.YuGiOhAPI;
+import com.naicson.yugioh.resttemplates.YuGiOhAPIDeckAndCardsRestTemplate;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import com.naicson.yugioh.entity.RelDeckCards;
-import com.naicson.yugioh.feing.YuGiOhAPI;
-import com.naicson.yugioh.resttemplates.YuGiOhAPIDeckAndCardsRestTemplate;
-import com.naicson.yugioh.service.interfaces.YuGiOhAPIDeckAndCards;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Service
 public class YuGiOhAPIDeckAndCardsImpl {
@@ -33,7 +25,7 @@ public class YuGiOhAPIDeckAndCardsImpl {
 	@Autowired
 	YuGiOhAPI feing;
 
-	public List<RelDeckCards> consultCardsOfADeckInYuGiOhAPI(String setName) {
+	public List<RelDeckCardsDTO> consultCardsOfADeckInYuGiOhAPI(String setName) {
 
 		if (setName == null || setName.isBlank())
 			throw new IllegalArgumentException("Set Name informed is invalid.");
@@ -47,7 +39,7 @@ public class YuGiOhAPIDeckAndCardsImpl {
 				.orElseThrow(() -> new NoSuchElementException("Cards of this Set were not found"));
 	}
 
-	private List<RelDeckCards> convertJsonInListOfRelDeckCards(String json) {
+	private List<RelDeckCardsDTO> convertJsonInListOfRelDeckCards(String json) {
 
 		if (json == null || json.isBlank())
 			throw new IllegalArgumentException("JSON with deck info was empty");
@@ -55,13 +47,13 @@ public class YuGiOhAPIDeckAndCardsImpl {
 		JSONObject object = new JSONObject(json);
 		JSONArray jsonArray = object.getJSONArray("data");
 
-		List<RelDeckCards> listRelation = new LinkedList<>();
+		List<RelDeckCardsDTO> listRelation = new LinkedList<>();
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 
 			JSONObject card = jsonArray.getJSONObject(i);
 
-			List<RelDeckCards> relation = this.returnARelDeckCardFromAJSONObject(card);
+			List<RelDeckCardsDTO> relation = this.returnARelDeckCardFromAJSONObject(card);
 
 			if (!relation.isEmpty())
 				relation.stream().forEach(rel -> listRelation.add(rel));
@@ -70,9 +62,9 @@ public class YuGiOhAPIDeckAndCardsImpl {
 		return listRelation;
 	}
 
-	private List<RelDeckCards> returnARelDeckCardFromAJSONObject(JSONObject card) {
+	private List<RelDeckCardsDTO> returnARelDeckCardFromAJSONObject(JSONObject card) {
 		
-		List<RelDeckCards> listRelDeckCards = IntStream.range(0, card.getJSONArray("card_sets").length())
+		List<RelDeckCardsDTO> listRelDeckCards = IntStream.range(0, card.getJSONArray("card_sets").length())
 			.mapToObj(i -> card.getJSONArray("card_sets").getJSONObject(i))
 			.filter(c -> c.get("set_name").equals(this.SET_NAME))
 			.filter(c -> 
@@ -80,7 +72,7 @@ public class YuGiOhAPIDeckAndCardsImpl {
 					((String) c.get("set_code")).contains("EN") :
 					((String) c.get("set_code")) != null)
 			.map(relation -> {
-				RelDeckCards relDeckCards = new RelDeckCards();
+				RelDeckCardsDTO relDeckCards = new RelDeckCardsDTO();
 				relDeckCards.setCardNumber(Integer.toUnsignedLong((Integer) card.get("id")));
 				relDeckCards.setCard_price(Double.parseDouble((String) relation.get("set_price")));
 				relDeckCards.setCard_raridade((String) relation.get("set_rarity"));
@@ -97,10 +89,10 @@ public class YuGiOhAPIDeckAndCardsImpl {
 		return this.editSetCodeDuplicated(listRelDeckCards);
 	}
 	
-	private List<RelDeckCards> editSetCodeDuplicated(List<RelDeckCards> listRelDeckCards) {
+	private List<RelDeckCardsDTO> editSetCodeDuplicated(List<RelDeckCardsDTO> listRelDeckCards) {
 		
 		Map<String, Long> mapDuplicated = listRelDeckCards.stream()
-		.collect(Collectors.groupingBy(RelDeckCards::getCardSetCode, Collectors.counting()))
+		.collect(Collectors.groupingBy(RelDeckCardsDTO::getCardSetCode, Collectors.counting()))
 		.entrySet()
 		.stream()
 		.filter(entry -> entry.getValue() > 1L)

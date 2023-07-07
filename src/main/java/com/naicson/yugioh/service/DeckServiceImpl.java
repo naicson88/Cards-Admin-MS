@@ -1,25 +1,22 @@
 package com.naicson.yugioh.service;
 
+import cardscommons.dto.KonamiDeckDTO;
+import cardscommons.dto.RelDeckCardsDTO;
+import com.naicson.yugioh.dto.CollectionDeck;
+import com.naicson.yugioh.service.yugiohAPI.YuGiOhAPIDeckAndCardsImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.naicson.yugioh.dto.CollectionDeck;
-import com.naicson.yugioh.dto.DeckCollectionYuGiPediaDTO;
-import com.naicson.yugioh.dto.KonamiDeck;
-import com.naicson.yugioh.entity.RelDeckCards;
-import com.naicson.yugioh.service.interfaces.DeckService;
-import com.naicson.yugioh.service.yugiohAPI.YuGiOhAPIDeckAndCardsImpl;
-
 @Service
-public class DeckServiceImpl implements DeckService {
+public class DeckServiceImpl {
 	
 	Logger logger = LoggerFactory.getLogger(DeckServiceImpl.class);
 	
@@ -29,10 +26,10 @@ public class DeckServiceImpl implements DeckService {
 	@Autowired
 	CardServiceDetailImpl cardService;
 
-	@Override
-	public KonamiDeck createNewKonamiDeckWithCards(KonamiDeck konamiDeck, String token) {
+
+	public KonamiDeckDTO createNewKonamiDeckWithCards(KonamiDeckDTO konamiDeck, String token) {
 		
-		List<RelDeckCards> listRelDeckCards = apiService.consultCardsOfADeckInYuGiOhAPI(konamiDeck.getRequestSource());
+		List<RelDeckCardsDTO> listRelDeckCards = apiService.consultCardsOfADeckInYuGiOhAPI(konamiDeck.getRequestSource());
 		
 		if(listRelDeckCards == null || listRelDeckCards.isEmpty())	
 			throw new IllegalArgumentException("Informed Relation Deck x Cards is invalid!");
@@ -56,7 +53,7 @@ public class DeckServiceImpl implements DeckService {
 		if(cDeck.getSetId() == null)
 			throw new IllegalArgumentException("Invalid Set Id");
 		
-		List<RelDeckCards> listRelDeckCards = getListRelDeckCardsForNewCollectionDeck(cDeck);
+		List<RelDeckCardsDTO> listRelDeckCards = getListRelDeckCardsForNewCollectionDeck(cDeck);
 		
 		//It necessary to check if all cards are already registered in cards' table
 		List<Long> listCardsNotRegistered = checkCardsNotRegistered(listRelDeckCards, token);
@@ -70,15 +67,15 @@ public class DeckServiceImpl implements DeckService {
 					
 	}
 	
-	private List<Long> checkCardsNotRegistered(List<RelDeckCards> listRelDeckCards, String token) {
+	private List<Long> checkCardsNotRegistered(List<RelDeckCardsDTO> listRelDeckCards, String token) {
 		Long[] cardsNotRegistered = cardService.verifyCardsNotRegistered(listRelDeckCards, token);
 
 		return Arrays.asList(cardsNotRegistered).stream().distinct().collect(Collectors.toList());
 	}
 
-	private List<RelDeckCards> getListRelDeckCardsForNewCollectionDeck(CollectionDeck cDeck) {
+	private List<RelDeckCardsDTO> getListRelDeckCardsForNewCollectionDeck(CollectionDeck cDeck) {
 		
-		List<RelDeckCards> listRelDeckCards;
+		List<RelDeckCardsDTO> listRelDeckCards;
 		if(cDeck.getFilterSetCode() != null && !cDeck.getFilterSetCode().isBlank()) 
 			listRelDeckCards = this.getFilteredCards(cDeck);
 		else 
@@ -87,9 +84,9 @@ public class DeckServiceImpl implements DeckService {
 		return listRelDeckCards;
 	}
 	
-	private List<RelDeckCards> getFilteredCards(CollectionDeck cDeck) {
+	private List<RelDeckCardsDTO> getFilteredCards(CollectionDeck cDeck) {
 		
-		List<RelDeckCards> listRelDeckCards = new ArrayList<>();
+		List<RelDeckCardsDTO> listRelDeckCards = new ArrayList<>();
 		String[] filtersSetCode = cDeck.getFilterSetCode().split(";");
 		
 		apiService.consultCardsOfADeckInYuGiOhAPI(cDeck.getRequestSource())

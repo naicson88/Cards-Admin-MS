@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import cardscommons.dto.RelDeckCardsDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import cardscommons.dto.CardYuGiOhAPI;
-import com.naicson.yugioh.entity.RelDeckCards;
+import cardscommons.dto.RelDeckCardsDTO;
 import com.naicson.yugioh.resttemplates.CardRestTemplate;
 import com.naicson.yugioh.service.interfaces.CardServiceDetail;
 import com.naicson.yugioh.service.yugiohAPI.YuGiOhAPICardsImpl;
@@ -19,7 +20,7 @@ import com.naicson.yugioh.util.exceptions.ErrorMessage;
 
 
 @Service
-public class CardServiceDetailImpl implements CardServiceDetail {
+public class CardServiceDetailImpl {
 
 	@Autowired
 	CardRestTemplate cardRestTemplate;
@@ -29,8 +30,8 @@ public class CardServiceDetailImpl implements CardServiceDetail {
 
 	Logger logger = LoggerFactory.getLogger(CardServiceDetailImpl.class);
 
-	@Override
-	public Long[] verifyCardsNotRegistered(List<RelDeckCards> listRelDeckCards, String token) {
+
+	public Long[] verifyCardsNotRegistered(List<RelDeckCardsDTO> listRelDeckCards, String token) {
 
 		ResponseEntity<Long[]> cardsNotRegistered = null;
 
@@ -47,7 +48,7 @@ public class CardServiceDetailImpl implements CardServiceDetail {
 
 	}
 
-	private void validVerifyCardsNotRegistered(List<RelDeckCards> listRelDeckCards, String token) {
+	private void validVerifyCardsNotRegistered(List<RelDeckCardsDTO> listRelDeckCards, String token) {
 		if (listRelDeckCards == null || listRelDeckCards.isEmpty()) 
 			throw new IllegalArgumentException("Invalid KonamiDeck informed.");
 		
@@ -55,12 +56,12 @@ public class CardServiceDetailImpl implements CardServiceDetail {
 			throw new IllegalArgumentException("Invalid Token");
 	}
 	
-	@Override
-	public List<Long> getCardsNumberFromListRelDeckCards(List<RelDeckCards> listRelDeckCards) {
+
+	public List<Long> getCardsNumberFromListRelDeckCards(List<RelDeckCardsDTO> listRelDeckCards) {
 
 		List<Long> cardNumbers = listRelDeckCards.stream().filter(rel -> rel.getCardNumber() != null)
 				.distinct()
-				.map(RelDeckCards::getCardNumber)
+				.map(RelDeckCardsDTO::getCardNumber)
 				.collect(Collectors.toList());
 
 		if (cardNumbers.isEmpty())
