@@ -9,24 +9,20 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.naicson.yugioh.dto.CardYuGiOhAPI;
+import cardscommons.dto.CardYuGiOhAPI;
 import com.naicson.yugioh.resttemplates.YuGiOhAPICardsRestTemplate;
-import com.naicson.yugioh.service.interfaces.YuGiOhAPICards;
 import com.naicson.yugioh.util.exceptions.ErrorMessage;
 
 @Service
-public class YuGiOhAPICardsImpl implements YuGiOhAPICards {
+public class YuGiOhAPICardsImpl {
 	
 	@Autowired
 	YuGiOhAPICardsRestTemplate apiCards;
 	
 	Logger logger = LoggerFactory.getLogger(YuGiOhAPICardsImpl.class);
-	
-	@Override
+
 	public CardYuGiOhAPI consultCardOnYuGiOhAPI(Long cardNumber) {
-		
 		String json = apiCards.getCardFromYuGiOhAPI(cardNumber);
-		
 		return this.transformJsonInCard(json);
 	}
 	

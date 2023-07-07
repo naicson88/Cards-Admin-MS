@@ -3,7 +3,7 @@ package com.naicson.yugioh.dto;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-public class PriceDTO {
+public class PriceDTOo {
 	
 	private String cardName;
 	private String cardSetCode;
@@ -11,11 +11,11 @@ public class PriceDTO {
 	private String cardRarity;
 	private Date updateTime;
 	
-	public PriceDTO() {
+	public PriceDTOo() {
 		
 	}
 	
-	public PriceDTO(String cardName, String cardSetCode, double price, Date updateTime) {
+	public PriceDTOo(String cardName, String cardSetCode, double price, Date updateTime) {
 		super();
 		this.cardName = cardName;
 		this.cardSetCode = cardSetCode;

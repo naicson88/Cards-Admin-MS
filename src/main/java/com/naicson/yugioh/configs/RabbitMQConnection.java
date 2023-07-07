@@ -30,9 +30,7 @@ public class RabbitMQConnection {
 	private Binding relationship(Queue queue, DirectExchange directExchange) {
 		return new Binding(queue.getName(), Binding.DestinationType.QUEUE, directExchange.getName(), queue.getName(), null);
 	}
-	
 
-	
 	@PostConstruct
 	public void add() {
 		this.createDeckQueue();
@@ -40,6 +38,7 @@ public class RabbitMQConnection {
 		this.createDeckCollectionQueue();
 		this.createCardQueue();
 		this.createSetPriceQueue();
+//		this.createCardPriceQueue();
 	}
 	
 	private void createDeckQueue() {
@@ -49,7 +48,6 @@ public class RabbitMQConnection {
 		
 		Binding deckBinding = this.relationship(deckQueue, change);
 		
-		//Creating RabbitMQ Queues
 		this.amqAdmin.declareQueue(deckQueue);
 		
 		this.amqAdmin.declareExchange(change);
@@ -63,7 +61,6 @@ public class RabbitMQConnection {
 		
 		Binding collectionBinding = this.relationship(setCollectionQueue, change);
 		
-		//Creating RabbitMQ Queues
 		this.amqAdmin.declareQueue(setCollectionQueue);
 		
 		this.amqAdmin.declareExchange(change);
@@ -77,7 +74,6 @@ public class RabbitMQConnection {
 		
 		Binding collectionBinding = this.relationship(deckCollectionQueue, change);
 		
-		//Creating RabbitMQ Queues
 		this.amqAdmin.declareQueue(deckCollectionQueue);
 		
 		this.amqAdmin.declareExchange(change);
@@ -91,7 +87,6 @@ public class RabbitMQConnection {
 		
 		Binding cardBinding = this.relationship(cardQueue, change);
 		
-		//Creating RabbitMQ Queues
 		this.amqAdmin.declareQueue(cardQueue);
 		
 		this.amqAdmin.declareExchange(change);
@@ -104,13 +99,24 @@ public class RabbitMQConnection {
 		DirectExchange change = this.directExchange();	
 		Binding setPriceBinding = this.relationship(setPriceQueue, change);
 		
-		//Creating RabbitMQ Queues
 		this.amqAdmin.declareQueue(setPriceQueue);
 		
 		this.amqAdmin.declareExchange(change);
 		
 		this.amqAdmin.declareBinding(setPriceBinding);	
 	}
+	
+//	private void createCardPriceQueue() {
+//		Queue cardPriceQueue = this.queue(RabbitMQConstantes.CARD_PRICE_QUEUE);
+//		DirectExchange change = this.directExchange();	
+//		Binding cardPriceBinding = this.relationship(cardPriceQueue, change);
+//
+//		this.amqAdmin.declareQueue(cardPriceQueue);
+//		
+//		this.amqAdmin.declareExchange(change);
+//		
+//		this.amqAdmin.declareBinding(cardPriceBinding);	
+//	}
 	
 	
 }

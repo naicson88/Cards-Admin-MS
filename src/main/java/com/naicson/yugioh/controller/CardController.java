@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.naicson.yugioh.configs.RabbitMQConstantes;
-import com.naicson.yugioh.dto.AddNewCardToDeckDTO;
-import com.naicson.yugioh.dto.CardYuGiOhAPI;
+import cardscommons.dto.AddNewCardToDeckDTO;
+import cardscommons.dto.CardYuGiOhAPI;
 import com.naicson.yugioh.resttemplates.CardRestTemplate;
 import com.naicson.yugioh.service.CardServiceDetailImpl;
 import com.naicson.yugioh.service.CardServiceImpl;

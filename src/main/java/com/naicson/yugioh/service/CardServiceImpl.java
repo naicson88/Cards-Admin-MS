@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.naicson.yugioh.dto.AddNewCardToDeckDTO;
+import cardscommons.dto.AddNewCardToDeckDTO;
 import com.naicson.yugioh.entity.RelDeckCards;
 
 @Service

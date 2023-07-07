@@ -71,11 +71,9 @@ public class DeckServiceImpl implements DeckService {
 	}
 	
 	private List<Long> checkCardsNotRegistered(List<RelDeckCards> listRelDeckCards, String token) {
-		
 		Long[] cardsNotRegistered = cardService.verifyCardsNotRegistered(listRelDeckCards, token);
-			
+
 		return Arrays.asList(cardsNotRegistered).stream().distinct().collect(Collectors.toList());
-		
 	}
 
 	private List<RelDeckCards> getListRelDeckCardsForNewCollectionDeck(CollectionDeck cDeck) {
@@ -95,7 +93,6 @@ public class DeckServiceImpl implements DeckService {
 		String[] filtersSetCode = cDeck.getFilterSetCode().split(";");
 		
 		apiService.consultCardsOfADeckInYuGiOhAPI(cDeck.getRequestSource())
-		.stream()
 		.forEach(rel -> {
 			for(String set : filtersSetCode) {
 				if(rel.getCardSetCode().contains(set)) {
@@ -115,7 +112,7 @@ public class DeckServiceImpl implements DeckService {
 		if(listCardsNotRegistered != null && !listCardsNotRegistered.isEmpty())
 			cDeck.setCardsToBeRegistered(cardService.getCardsToBeRegistered(listCardsNotRegistered));
 		
-		cDeck.getRelDeckCards().stream().forEach(rel -> rel.setDt_criacao(new Date()));
+		cDeck.getRelDeckCards().forEach(rel -> rel.setDt_criacao(new Date()));
 			
 		return cDeck;
 	}

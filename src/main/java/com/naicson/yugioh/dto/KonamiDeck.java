@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.naicson.yugioh.entity.RelDeckCards;
+import cardscommons.dto.CardYuGiOhAPI;
 
 @Component
 public class KonamiDeck implements Serializable {

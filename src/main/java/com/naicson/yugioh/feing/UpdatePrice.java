@@ -12,4 +12,7 @@ public interface UpdatePrice {
 	@GetMapping("/set_data/{deckName}")
 	Optional<String> getDeckPrice(@PathVariable String deckName); 
 	
+	@GetMapping("/get_card_prices/{card_name}")
+	Optional<String> getCardPrice(@PathVariable String card_name); 
+	
 }

@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.naicson.yugioh.dto.CardYuGiOhAPI;
+import cardscommons.dto.CardYuGiOhAPI;
 import com.naicson.yugioh.entity.RelDeckCards;
 import com.naicson.yugioh.resttemplates.CardRestTemplate;
 import com.naicson.yugioh.service.interfaces.CardServiceDetail;
@@ -63,15 +63,13 @@ public class CardServiceDetailImpl implements CardServiceDetail {
 				.map(RelDeckCards::getCardNumber)
 				.collect(Collectors.toList());
 
-		if (cardNumbers == null || cardNumbers.isEmpty())
+		if (cardNumbers.isEmpty())
 			throw new IllegalArgumentException("It was not possible get Card Numbers");
 
 		return cardNumbers;
 
 	}
 
-	
-	@Override
 	public List<CardYuGiOhAPI> getCardsToBeRegistered(List<Long> cardsNotRegistered) {
 		
 		if(cardsNotRegistered == null || cardsNotRegistered.isEmpty())
