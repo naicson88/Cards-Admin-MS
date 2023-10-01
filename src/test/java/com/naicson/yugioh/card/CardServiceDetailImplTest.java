@@ -18,7 +18,7 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.naicson.yugioh.dto.CardYuGiOhAPI;
+import cardscommons.dto.CardYuGiOhAPI;
 import com.naicson.yugioh.mocks.CardYuGiOhAPIMock;
 import com.naicson.yugioh.service.CardServiceDetailImpl;
 import com.naicson.yugioh.service.yugiohAPI.YuGiOhAPICardsImpl;

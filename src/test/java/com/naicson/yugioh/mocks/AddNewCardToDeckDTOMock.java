@@ -1,6 +1,7 @@
 package com.naicson.yugioh.mocks;
 
-import com.naicson.yugioh.dto.AddNewCardToDeckDTO;
+
+import cardscommons.dto.AddNewCardToDeckDTO;
 
 public class AddNewCardToDeckDTOMock {
 	

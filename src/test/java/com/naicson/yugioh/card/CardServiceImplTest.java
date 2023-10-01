@@ -1,30 +1,25 @@
 package com.naicson.yugioh.card;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.ArgumentMatchers.anyString;
 
-import java.util.List;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.context.ActiveProfiles;
-
-import com.naicson.yugioh.dto.AddNewCardToDeckDTO;
-import com.naicson.yugioh.dto.CardYuGiOhAPI;
+import cardscommons.dto.AddNewCardToDeckDTO;
+import cardscommons.dto.CardYuGiOhAPI;
 import com.naicson.yugioh.mocks.AddNewCardToDeckDTOMock;
 import com.naicson.yugioh.mocks.CardYuGiOhAPIMock;
 import com.naicson.yugioh.service.CardServiceDetailImpl;
 import com.naicson.yugioh.service.CardServiceImpl;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.*;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.context.ActiveProfiles;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.anyString;
 
 @ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)

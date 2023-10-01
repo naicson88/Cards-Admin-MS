@@ -1,11 +1,11 @@
 package com.naicson.yugioh.mocks;
 
-import com.naicson.yugioh.dto.CollectionDeck;
+import cardscommons.dto.CollectionDeckDTO;
 
 public class CollectionDeckMock {
 	
-	public static CollectionDeck createCollectionDeck() {
-		CollectionDeck cDeck = new CollectionDeck();
+	public static CollectionDeckDTO createCollectionDeck() {
+		CollectionDeckDTO cDeck = new CollectionDeckDTO();
 		cDeck.setSetId(1);
 		cDeck.setIsSpeedDuel(true);
 		cDeck.setFilterSetCode(null);
@@ -13,8 +13,8 @@ public class CollectionDeckMock {
 		return cDeck;
 	}
 	
-	public static CollectionDeck createCollectionDeckFiltered() {
-		CollectionDeck cDeck = new CollectionDeck();
+	public static CollectionDeckDTO createCollectionDeckFiltered() {
+		CollectionDeckDTO cDeck = new CollectionDeckDTO();
 		cDeck.setSetId(1);
 		cDeck.setRequestSource("Any Request");
 		cDeck.setIsSpeedDuel(true);

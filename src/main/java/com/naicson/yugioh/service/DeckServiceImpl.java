@@ -1,8 +1,8 @@
 package com.naicson.yugioh.service;
 
+import cardscommons.dto.CollectionDeckDTO;
 import cardscommons.dto.KonamiDeckDTO;
 import cardscommons.dto.RelDeckCardsDTO;
-import com.naicson.yugioh.dto.CollectionDeck;
 import com.naicson.yugioh.service.yugiohAPI.YuGiOhAPIDeckAndCardsImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,7 +48,7 @@ public class DeckServiceImpl {
 	}
 	
 	
-	public CollectionDeck createNewCollectionDeck(CollectionDeck cDeck, String token) {
+	public CollectionDeckDTO createNewCollectionDeck(CollectionDeckDTO cDeck, String token) {
 		
 		if(cDeck.getSetId() == null)
 			throw new IllegalArgumentException("Invalid Set Id");
@@ -73,7 +73,7 @@ public class DeckServiceImpl {
 		return Arrays.asList(cardsNotRegistered).stream().distinct().collect(Collectors.toList());
 	}
 
-	private List<RelDeckCardsDTO> getListRelDeckCardsForNewCollectionDeck(CollectionDeck cDeck) {
+	private List<RelDeckCardsDTO> getListRelDeckCardsForNewCollectionDeck(CollectionDeckDTO cDeck) {
 		
 		List<RelDeckCardsDTO> listRelDeckCards;
 		if(cDeck.getFilterSetCode() != null && !cDeck.getFilterSetCode().isBlank()) 
@@ -84,7 +84,7 @@ public class DeckServiceImpl {
 		return listRelDeckCards;
 	}
 	
-	private List<RelDeckCardsDTO> getFilteredCards(CollectionDeck cDeck) {
+	private List<RelDeckCardsDTO> getFilteredCards(CollectionDeckDTO cDeck) {
 		
 		List<RelDeckCardsDTO> listRelDeckCards = new ArrayList<>();
 		String[] filtersSetCode = cDeck.getFilterSetCode().split(";");
@@ -103,7 +103,7 @@ public class DeckServiceImpl {
 	}
 
 
-	public CollectionDeck registerNewDeckCollectionYugipedia(CollectionDeck cDeck, String token) {
+	public CollectionDeckDTO registerNewDeckCollectionYugipedia(CollectionDeckDTO cDeck, String token) {
 		List<Long> listCardsNotRegistered = checkCardsNotRegistered(cDeck.getRelDeckCards(), token);
 		
 		if(listCardsNotRegistered != null && !listCardsNotRegistered.isEmpty())

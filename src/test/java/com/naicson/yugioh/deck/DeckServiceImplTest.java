@@ -9,6 +9,9 @@ import static org.mockito.ArgumentMatchers.anyString;
 
 import java.util.List;
 
+import cardscommons.dto.CollectionDeckDTO;
+import cardscommons.dto.KonamiDeckDTO;
+import cardscommons.dto.RelDeckCardsDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,10 +22,6 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ActiveProfiles;
-
-import com.naicson.yugioh.dto.CollectionDeck;
-import com.naicson.yugioh.dto.KonamiDeck;
-import com.naicson.yugioh.entity.RelDeckCards;
 import com.naicson.yugioh.mocks.CollectionDeckMock;
 import com.naicson.yugioh.mocks.KonamiDeckMock;
 import com.naicson.yugioh.mocks.RelDeckCardsMock;
@@ -42,7 +41,7 @@ public class DeckServiceImplTest {
 	@Mock
 	YuGiOhAPIDeckAndCardsImpl apiService;
 	
-	List<RelDeckCards> listRel;
+	List<RelDeckCardsDTO> listRel;
 	private final String TOKEN = "Token Teste";
 	Long[] arr = {};
 	
@@ -55,12 +54,12 @@ public class DeckServiceImplTest {
 	@Test
 	public void createNewKonamiDeckWithCards() {
 		
-		KonamiDeck kDeck = KonamiDeckMock.createKonamiDeck();
+		KonamiDeckDTO kDeck = KonamiDeckMock.createKonamiDeck();
 			
 		Mockito.when(apiService.consultCardsOfADeckInYuGiOhAPI(kDeck.getRequestSource())).thenReturn(listRel);
 		Mockito.when(cardService.verifyCardsNotRegistered(listRel, TOKEN)).thenReturn(arr);
 		
-		KonamiDeck deck = deckService.createNewKonamiDeckWithCards(kDeck, TOKEN);
+		KonamiDeckDTO deck = deckService.createNewKonamiDeckWithCards(kDeck, TOKEN);
 		
 		assertNotNull(deck);
 		assertEquals(listRel.size(), deck.getRelDeckCards().size());
@@ -72,12 +71,12 @@ public class DeckServiceImplTest {
 	@Test
 	public void createNewCollectionDeck() {
 	
-		CollectionDeck cDeck = CollectionDeckMock.createCollectionDeck();
+		CollectionDeckDTO cDeck = CollectionDeckMock.createCollectionDeck();
 		
 		Mockito.when(apiService.consultCardsOfADeckInYuGiOhAPI(cDeck.getRequestSource())).thenReturn(listRel);
 		Mockito.when(cardService.verifyCardsNotRegistered(listRel, TOKEN)).thenReturn(arr);
-		
-		CollectionDeck deck = deckService.createNewCollectionDeck(cDeck, TOKEN);
+
+		CollectionDeckDTO deck = deckService.createNewCollectionDeck(cDeck, TOKEN);
 		
 		assertNotNull(deck);
 		assertEquals(listRel.size(), deck.getRelDeckCards().size());
@@ -88,16 +87,16 @@ public class DeckServiceImplTest {
 	
 	@Test
 	public void createNewCollectionDeckWithFilteredCards() {
-		
-		CollectionDeck cDeck = CollectionDeckMock.createCollectionDeckFiltered();
+
+		CollectionDeckDTO cDeck = CollectionDeckMock.createCollectionDeckFiltered();
 		listRel = List.of(RelDeckCardsMock.relDeckCardsFiltered("123456"),
 				RelDeckCardsMock.relDeckCardsFiltered("ABCD"),
 				RelDeckCardsMock.relDeckCardsFiltered(""), RelDeckCardsMock.relDeckCardsFiltered("ABCD"));
 		
 		Mockito.when(apiService.consultCardsOfADeckInYuGiOhAPI(cDeck.getRequestSource())).thenReturn(listRel);
 		Mockito.when(cardService.verifyCardsNotRegistered(anyList(), anyString())).thenReturn(arr);
-		
-		CollectionDeck deck = deckService.createNewCollectionDeck(cDeck, TOKEN);
+
+		CollectionDeckDTO deck = deckService.createNewCollectionDeck(cDeck, TOKEN);
 		
 		assertNotNull(deck);
 		assertEquals(2, deck.getRelDeckCards().size());

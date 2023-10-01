@@ -1,8 +1,10 @@
 package com.naicson.yugioh.dto;
 
+import cardscommons.dto.CollectionDeckDTO;
+
 import java.util.List;
 
-public class DeckCollectionYuGiPediaDTO extends CollectionDeck{
+public class DeckCollectionYuGiPediaDTO extends CollectionDeckDTO {
 	
 	private static final long serialVersionUID = 1L;
 //	private long collectionId;

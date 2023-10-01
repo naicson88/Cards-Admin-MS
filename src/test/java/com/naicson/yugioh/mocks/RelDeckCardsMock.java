@@ -1,13 +1,13 @@
 package com.naicson.yugioh.mocks;
 
+import cardscommons.dto.RelDeckCardsDTO;
+
 import java.util.Date;
 
-import com.naicson.yugioh.entity.RelDeckCards;
-
 public class RelDeckCardsMock {
-public static RelDeckCards relDeckCards() {
-		
-		RelDeckCards rel = new RelDeckCards();
+public static RelDeckCardsDTO relDeckCards() {
+
+	   RelDeckCardsDTO rel = new RelDeckCardsDTO();
 		rel.setId(1L);
 		rel.setCard_price(1.5);
 		rel.setCardNumber(123456L);
@@ -20,9 +20,9 @@ public static RelDeckCards relDeckCards() {
 		return rel;		
 	}
 
-	public static RelDeckCards relDeckCardsFiltered(String filter) {
-		
-		RelDeckCards rel = new RelDeckCards();
+	public static RelDeckCardsDTO relDeckCardsFiltered(String filter) {
+
+		RelDeckCardsDTO rel = new RelDeckCardsDTO();
 		rel.setId(1L);
 		rel.setCard_price(1.5);
 		rel.setCardNumber(123456L);

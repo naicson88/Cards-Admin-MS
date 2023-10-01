@@ -1,25 +1,19 @@
 package com.naicson.yugioh.controller;
 
-import javax.validation.Valid;
-
+import cardscommons.dto.AssociationDTO;
+import cardscommons.dto.SetCollectionDTO;
+import com.naicson.yugioh.configs.RabbitMQConstantes;
+import com.naicson.yugioh.service.RabbitMQService;
+import com.naicson.yugioh.service.setCollection.SetCollectionServiceImpl;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.naicson.yugioh.configs.RabbitMQConstantes;
-import com.naicson.yugioh.dto.AssociationDTO;
-import com.naicson.yugioh.dto.SetCollectionDto;
-import com.naicson.yugioh.service.RabbitMQService;
-import com.naicson.yugioh.service.setCollection.SetCollectionServiceImpl;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping({ "v1/admin/set-collection" })
@@ -35,12 +29,11 @@ public class SetCollectionController {
 	Logger logger = LoggerFactory.getLogger(SetCollectionController.class);
 	
 	@PostMapping("/new-collection")
-	public ResponseEntity<SetCollectionDto> newSetCollection(@Valid @RequestBody SetCollectionDto collection,
-			@RequestHeader("Authorization") String token) {
+	public ResponseEntity<SetCollectionDTO> newSetCollection(@Valid @RequestBody SetCollectionDTO collection,
+															 @RequestHeader("Authorization") String token) {
 		
 		logger.info("Starting creating new SetCollection...");
-		
-		collection = collectionService.createNewSetCollection(collection, token);
+
 		this.rabbitService.sendMessageAsJson(RabbitMQConstantes.SETCOLLECTION_QUEUE, collection);
 		
 		logger.info("Message sent successfully to SETCOLLECTION Queue");

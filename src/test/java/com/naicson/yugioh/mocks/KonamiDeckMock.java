@@ -1,11 +1,11 @@
 package com.naicson.yugioh.mocks;
 
-import com.naicson.yugioh.dto.KonamiDeck;
+import cardscommons.dto.KonamiDeckDTO;
 
 public class KonamiDeckMock {
 	
-	public static KonamiDeck createKonamiDeck() {
-		KonamiDeck k = new KonamiDeck();
+	public static KonamiDeckDTO createKonamiDeck() {
+		KonamiDeckDTO k = new KonamiDeckDTO();
 		k.setRequestSource("Request mock");
 		k.setIsSpeedDuel(true);
 		

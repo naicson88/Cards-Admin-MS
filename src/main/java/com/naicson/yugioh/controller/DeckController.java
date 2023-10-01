@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import cardscommons.dto.CollectionDeckDTO;
 import cardscommons.dto.RelDeckCardsDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.naicson.yugioh.configs.RabbitMQConstantes;
-import com.naicson.yugioh.dto.CollectionDeck;
 import cardscommons.dto.KonamiDeckDTO;
 
 import com.naicson.yugioh.service.DeckServiceImpl;
@@ -54,8 +54,8 @@ public class DeckController {
 	}
 	
 	@PostMapping("/new-deck-collection")
-	public ResponseEntity<CollectionDeck> registerCollectionDeck(@RequestBody  CollectionDeck cDeck, @RequestHeader("Authorization") String token){
-		CollectionDeck createCollectionDeck = deckService.createNewCollectionDeck(cDeck, token);
+	public ResponseEntity<CollectionDeckDTO> registerCollectionDeck(@RequestBody  CollectionDeckDTO cDeck, @RequestHeader("Authorization") String token){
+		CollectionDeckDTO createCollectionDeck = deckService.createNewCollectionDeck(cDeck, token);
 	
 		this.rabbitService.sendMessageAsJson(RabbitMQConstantes.DECK_COLLECTION_QUEUE, createCollectionDeck);
 		
@@ -63,8 +63,8 @@ public class DeckController {
 	}
 	
 	@PostMapping("/new-deck-collection-yugipedia")
-	public ResponseEntity<String> registerNewDeckCollectionYugipedia(@RequestBody CollectionDeck dto, @RequestHeader("Authorization") String token){
-		CollectionDeck newYugipediaDeck = deckService.registerNewDeckCollectionYugipedia(dto, token);
+	public ResponseEntity<String> registerNewDeckCollectionYugipedia(@RequestBody CollectionDeckDTO dto, @RequestHeader("Authorization") String token){
+		CollectionDeckDTO newYugipediaDeck = deckService.registerNewDeckCollectionYugipedia(dto, token);
 		
 		this.rabbitService.sendMessageAsJson(RabbitMQConstantes.DECK_COLLECTION_QUEUE, newYugipediaDeck);
 	

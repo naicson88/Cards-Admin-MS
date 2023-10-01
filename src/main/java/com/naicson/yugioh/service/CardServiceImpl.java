@@ -3,10 +3,11 @@ package com.naicson.yugioh.service;
 import java.util.Arrays;
 import java.util.List;
 
+import cardscommons.dto.RelDeckCardsDTO;
 import org.springframework.stereotype.Service;
 
 import cardscommons.dto.AddNewCardToDeckDTO;
-import com.naicson.yugioh.entity.RelDeckCards;
+import cardscommons.dto.SetCollectionDTO;
 
 @Service
 public class CardServiceImpl {
@@ -19,7 +20,7 @@ public class CardServiceImpl {
 	
 	public AddNewCardToDeckDTO addNewCardToDeck(AddNewCardToDeckDTO card, String token) {
 		
-		RelDeckCards rel = new RelDeckCards();
+		RelDeckCardsDTO rel = new RelDeckCardsDTO();
 		rel.setCardNumber(card.getNumber());
 		
 		Long[] cardsNotRegistered = cardService.verifyCardsNotRegistered(List.of(rel), token);

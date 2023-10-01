@@ -13,7 +13,7 @@ import org.springframework.amqp.core.Queue;
 public class RabbitMQConnection {
 	
 	private static final String NOME_EXCHANGE = "amq.direct";
-	private AmqpAdmin amqAdmin;
+	private final AmqpAdmin amqAdmin;
 	
 	public RabbitMQConnection(AmqpAdmin admin) {
 		this.amqAdmin = admin;
@@ -40,19 +40,19 @@ public class RabbitMQConnection {
 		this.createSetPriceQueue();
 //		this.createCardPriceQueue();
 	}
-	
+
+	private void declareCreation(Queue deckQueue, DirectExchange change, Binding binding){
+		this.amqAdmin.declareQueue(deckQueue);
+		this.amqAdmin.declareExchange(change);
+		this.amqAdmin.declareBinding(binding);
+	}
+
 	private void createDeckQueue() {
 		Queue deckQueue = this.queue(RabbitMQConstantes.DECK_QUEUE);
-		
 		DirectExchange change = this.directExchange();
-		
 		Binding deckBinding = this.relationship(deckQueue, change);
 		
-		this.amqAdmin.declareQueue(deckQueue);
-		
-		this.amqAdmin.declareExchange(change);
-		
-		this.amqAdmin.declareBinding(deckBinding);
+		this.declareCreation(deckQueue, change, deckBinding);
 	}
 	
 	private void createSetCollectionQueue() {
@@ -60,12 +60,7 @@ public class RabbitMQConnection {
 		DirectExchange change = this.directExchange();
 		
 		Binding collectionBinding = this.relationship(setCollectionQueue, change);
-		
-		this.amqAdmin.declareQueue(setCollectionQueue);
-		
-		this.amqAdmin.declareExchange(change);
-		
-		this.amqAdmin.declareBinding(collectionBinding);	
+		this.declareCreation(setCollectionQueue, change, collectionBinding);
 	}
 	
 	private void createDeckCollectionQueue() {
@@ -73,12 +68,8 @@ public class RabbitMQConnection {
 		DirectExchange change = this.directExchange();
 		
 		Binding collectionBinding = this.relationship(deckCollectionQueue, change);
-		
-		this.amqAdmin.declareQueue(deckCollectionQueue);
-		
-		this.amqAdmin.declareExchange(change);
-		
-		this.amqAdmin.declareBinding(collectionBinding);	
+
+		this.declareCreation(deckCollectionQueue, change, collectionBinding);
 	}
 	
 	private void createCardQueue() {
@@ -86,24 +77,16 @@ public class RabbitMQConnection {
 		DirectExchange change = this.directExchange();
 		
 		Binding cardBinding = this.relationship(cardQueue, change);
-		
-		this.amqAdmin.declareQueue(cardQueue);
-		
-		this.amqAdmin.declareExchange(change);
-		
-		this.amqAdmin.declareBinding(cardBinding);	
+
+		this.declareCreation(cardQueue, change, cardBinding);
 	}
 	
 	private void createSetPriceQueue() {
 		Queue setPriceQueue = this.queue(RabbitMQConstantes.SET_PRICE_QUEUE);
 		DirectExchange change = this.directExchange();	
 		Binding setPriceBinding = this.relationship(setPriceQueue, change);
-		
-		this.amqAdmin.declareQueue(setPriceQueue);
-		
-		this.amqAdmin.declareExchange(change);
-		
-		this.amqAdmin.declareBinding(setPriceBinding);	
+
+		this.declareCreation(setPriceQueue, change, setPriceBinding);
 	}
 	
 //	private void createCardPriceQueue() {

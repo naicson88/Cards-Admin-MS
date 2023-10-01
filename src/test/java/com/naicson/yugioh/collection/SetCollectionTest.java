@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import cardscommons.dto.AssociationDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.naicson.yugioh.dto.AssociationDTO;
 import com.naicson.yugioh.mocks.AssociationDTOMock;
 import com.naicson.yugioh.resttemplates.SetCollectionRestTemplate;
 import com.naicson.yugioh.service.setCollection.SetCollectionServiceImpl;

@@ -1,7 +1,6 @@
 package com.naicson.yugioh.resttemplates;
 
-import java.util.List;
-
+import cardscommons.dto.AssociationDTO;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -11,7 +10,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.naicson.yugioh.dto.AssociationDTO;
 
 @Component
 public class SetCollectionRestTemplate {
